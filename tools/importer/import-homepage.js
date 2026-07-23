@@ -9,7 +9,6 @@ import tabsTimelineParser from './parsers/tabs-timeline.js';
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/mgselect-cleanup.js';
 import sectionsTransformer from './transformers/mgselect-sections.js';
-import dmImagesTransformer from './transformers/mgselect-dm-images.js';
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
 const PAGE_TEMPLATE = {
@@ -88,12 +87,11 @@ const parsers = {
 };
 
 // TRANSFORMER REGISTRY
-// Order: cleanup (beforeTransform) first; sections + dm-images run in afterTransform.
-// The DM transformer must run after parsers extract image cells, so it lives in afterTransform.
+// Order: cleanup (beforeTransform) first; sections runs in afterTransform.
+// Images are left as plain <img> tags so AEM ingestion pulls them into the DAM.
 const transformers = [
   cleanupTransformer,
   ...(PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [sectionsTransformer] : []),
-  dmImagesTransformer,
 ];
 
 /**

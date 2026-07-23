@@ -315,75 +315,6 @@ var CustomImportScript = (() => {
     }
   }
 
-  // tools/importer/transformers/mgselect-dm-images.js
-  function detectDynamicMediaUrl(urlStr) {
-    let u;
-    try {
-      u = new URL(urlStr, "https://x/");
-    } catch (e) {
-      return false;
-    }
-    if (u.pathname.startsWith("/is/image/")) {
-      return "scene7";
-    }
-    if (/^delivery-p\d+-e\d+\.adobeaemcloud\.com$/.test(u.hostname) && u.pathname.startsWith("/adobe/assets/urn:")) {
-      return "dm-openapi";
-    }
-    return false;
-  }
-  var LINKED_DM_INLINE_WRAPPER_TAGS = /* @__PURE__ */ new Set(["PICTURE"]);
-  var LINKED_DM_WRAPPER_SIBLING_TAGS = /* @__PURE__ */ new Set(["SOURCE"]);
-  function findLinkedDmCarrier(img) {
-    if (!img || !img.parentElement) return null;
-    let node = img;
-    let parent = img.parentElement;
-    while (parent && LINKED_DM_INLINE_WRAPPER_TAGS.has(parent.tagName)) {
-      let foundNode = false;
-      for (const child of parent.children) {
-        if (child === node) {
-          foundNode = true;
-        } else if (!LINKED_DM_WRAPPER_SIBLING_TAGS.has(child.tagName)) {
-          return null;
-        }
-      }
-      if (!foundNode) return null;
-      node = parent;
-      parent = parent.parentElement;
-    }
-    if (!parent || parent.tagName !== "A") return null;
-    if (parent.children.length !== 1 || parent.children[0] !== node) return null;
-    if (parent.textContent.trim() !== "") return null;
-    return parent;
-  }
-  var EMPTY_ALT_SENTINEL = "Image without alt text";
-  function altToLinkText(alt) {
-    return alt || EMPTY_ALT_SENTINEL;
-  }
-  function transform3(hookName, element, payload) {
-    if (hookName !== "afterTransform") return;
-    const doc = element.ownerDocument;
-    element.querySelectorAll("img").forEach((img) => {
-      const src = img.getAttribute("src") || "";
-      if (!detectDynamicMediaUrl(src)) return;
-      const alt = img.getAttribute("alt") || "";
-      const linkedAnchor = findLinkedDmCarrier(img);
-      if (linkedAnchor) {
-        linkedAnchor.setAttribute("title", src);
-        linkedAnchor.textContent = altToLinkText(alt);
-        return;
-      }
-      const parent = img.parentElement;
-      if (parent && parent.tagName === "A") {
-        console.warn("DM image inside mixed-content anchor, skipped:", src);
-        return;
-      }
-      const a = doc.createElement("a");
-      a.href = src;
-      a.textContent = altToLinkText(alt);
-      img.replaceWith(a);
-    });
-  }
-
   // tools/importer/import-homepage.js
   var PAGE_TEMPLATE = {
     name: "homepage",
@@ -459,8 +390,7 @@ var CustomImportScript = (() => {
   };
   var transformers = [
     transform,
-    ...PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [transform2] : [],
-    transform3
+    ...PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [transform2] : []
   ];
   function executeTransformers(hookName, element, payload) {
     const enhancedPayload = __spreadProps(__spreadValues({}, payload), {
