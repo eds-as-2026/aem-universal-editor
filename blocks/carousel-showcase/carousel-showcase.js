@@ -137,6 +137,36 @@ function addThemeToggle(block) {
   block.append(toggle);
 }
 
+// Dealer carousel: each slide shows a city heading above a framed image with a
+// "Know More" button. Source content is [image] + [city link]; we lift the city
+// name into a heading and turn the link into the button, matching the original.
+function decorateDealer(block) {
+  block.querySelectorAll('.carousel-showcase-slide').forEach((slide) => {
+    const content = slide.querySelector('.carousel-showcase-slide-content');
+    if (!content) return;
+    const link = content.querySelector('a[href]');
+    const img = slide.querySelector('.carousel-showcase-slide-image img');
+    const cityName = (link && link.textContent.trim())
+      || (img && img.getAttribute('alt'))
+      || '';
+
+    const heading = document.createElement('h3');
+    heading.className = 'carousel-showcase-dealer-title';
+    heading.textContent = cityName;
+    // Place the city heading above the image within the slide.
+    slide.prepend(heading);
+
+    if (link) {
+      link.classList.add('carousel-showcase-dealer-cta');
+      // Only override the visible label when the source used the bare city
+      // name; keep any real CTA text an author may set later.
+      if (link.textContent.trim().toLowerCase() === cityName.toLowerCase()) {
+        link.textContent = 'Know More';
+      }
+    }
+  });
+}
+
 // Gallery marquee: a continuously auto-scrolling strip of image-only tiles.
 // No prev/next, no dots. Slides are cloned once so the scroll loops seamlessly.
 function decorateMarquee(block, rows, id) {
@@ -232,6 +262,10 @@ export default async function decorate(block) {
   if (variant === 'product-showcase') {
     decorateShowcaseImages(block);
     addThemeToggle(block);
+  }
+
+  if (variant === 'dealer-carousel') {
+    decorateDealer(block);
   }
 
   if (!isSingleSlide) {

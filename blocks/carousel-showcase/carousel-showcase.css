@@ -311,57 +311,127 @@
 /* stylelint-enable no-descending-specificity */
 
 /* ---------------------------------------------------------------------------
-   DEALER CAROUSEL — full-bleed portrait city photos + a plain white city link.
+   DEALER CAROUSEL — light editorial layout: green city heading, framed
+   landscape image, and a solid dark-green "Know More" button. Matches the
+   original (light background, centered content, not full-bleed).
    --------------------------------------------------------------------------- */
 .carousel-showcase.dealer-carousel {
-  --carousel-showcase-height: min(120vw, calc(100dvh - var(--nav-height)));
+  --dealer-green: rgb(20 66 45);
+  --carousel-showcase-height: auto;
+
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 24px 0 40px;
+}
+
+.carousel-showcase.dealer-carousel .carousel-showcase-slide {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: auto;
+  min-height: 0;
+  gap: 16px;
+  padding: 0 72px;
+}
+
+/* City heading — green, uppercase, centered above the image. */
+.carousel-showcase.dealer-carousel .carousel-showcase-dealer-title {
+  order: -1;
+  margin: 0;
+  color: var(--dealer-green);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: var(--heading-font-size-l);
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Framed landscape image (not full-bleed). */
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-image {
+  position: static;
+  inset: auto;
+  width: 100%;
+  max-width: 980px;
+  aspect-ratio: 16 / 7;
+  margin: 0 auto;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.carousel-showcase.dealer-carousel .carousel-showcase-slide-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 0%) 40%);
-  pointer-events: none;
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-image picture {
+  position: static;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-image picture > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-content {
-  z-index: 1;
-  position: relative;
+  position: static;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: var(--dark-text-color);
-  margin: 0;
-  padding: 24px 20px 40px;
+  justify-content: center;
   width: 100%;
+  margin: 0;
+  padding: 8px 0 0;
 }
 
+/* "Know More" button — solid dark green, white text. */
 /* stylelint-disable no-descending-specificity */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link {
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
   border: 0;
-  background: none;
-  color: var(--dark-text-color);
-  font-family: var(--heading-font-family);
-  font-size: var(--heading-font-size-m);
+  border-radius: 0;
+  background-color: var(--dealer-green);
+  color: rgb(255 255 255);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
   font-weight: 700;
-  text-transform: none;
-  letter-spacing: 0.16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   text-decoration: none;
+  transition: background-color 0.2s;
 }
 
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link:hover,
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link:focus-visible {
+  background-color: rgb(12 45 30);
   color: rgb(255 255 255);
-  text-decoration: underline;
+  text-decoration: none;
+}
+/* stylelint-enable no-descending-specificity */
+
+/* Dealer dots sit on the light background, so tint them green. */
+/* stylelint-disable no-descending-specificity */
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-indicators {
+  background-color: transparent;
+  padding: 20px 12px 0;
+}
+
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button {
+  background-color: rgb(20 66 45 / 30%);
+}
+
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button:disabled,
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button:hover,
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button:focus-visible {
+  background-color: var(--dealer-green);
 }
 /* stylelint-enable no-descending-specificity */
 
 @media (width >= 900px) {
-  .carousel-showcase.dealer-carousel {
-    --carousel-showcase-height: min(56.25vw, calc(100dvh - var(--nav-height)));
+  .carousel-showcase.dealer-carousel .carousel-showcase-slide {
+    padding: 0 120px;
+  }
+
+  .carousel-showcase.dealer-carousel .carousel-showcase-dealer-title {
+    font-size: var(--heading-font-size-xl);
   }
 }
 
@@ -446,6 +516,7 @@
 /* ---------------------------------------------------------------------------
    Shared controls (dots + arrows) — used by product-showcase & dealer-carousel.
    --------------------------------------------------------------------------- */
+/* stylelint-disable no-descending-specificity */
 .carousel-showcase .carousel-showcase-slide-indicators {
   display: flex;
   flex-wrap: wrap;
@@ -473,6 +544,7 @@
 .carousel-showcase .carousel-showcase-slide-indicator button:focus-visible {
   background-color: rgb(255 255 255);
 }
+/* stylelint-enable no-descending-specificity */
 
 /* Product showcase pagination = segmented progress bar (matches original).
    A centered horizontal track of equal-width 4px segments; the active slide's
