@@ -582,10 +582,13 @@
 }
 
 @media (width >= 900px) {
+  /* Left padding clears the prev chevron (left 36px + 60px wide = ~96px) so
+     the heading/CTAs never sit under it; right room + max-width keep the
+     text column off the next chevron too. */
   .carousel-showcase.product-showcase .carousel-showcase-slide-content,
   .carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content {
-    padding: 0 36px 140px;
-    max-width: 620px;
+    padding: 0 120px 140px;
+    max-width: 740px;
   }
 
   /* Slide heading desktop — source measured ~45px. */
