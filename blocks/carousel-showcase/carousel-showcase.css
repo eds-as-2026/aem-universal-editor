@@ -130,7 +130,7 @@
    --------------------------------------------------------------------------- */
 .carousel-showcase-theme-toggle {
   position: absolute;
-  left: 20px;
+  right: 20px;
   bottom: 20px;
   z-index: 3;
   display: inline-flex;
@@ -202,7 +202,9 @@
   pointer-events: none;
 }
 
-/* Text overlay: bottom-left anchored, transparent, white text. */
+/* Text overlay: bottom-left anchored, transparent, white text.
+   Extra bottom padding leaves room for the theme toggle (bottom-left) and the
+   pagination progress bar (bottom 40px) so they never overlap the text. */
 .carousel-showcase.product-showcase .carousel-showcase-slide-content,
 .carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content {
   z-index: 1;
@@ -215,7 +217,7 @@
   background: none;
   text-align: left;
   margin: 0;
-  padding: 24px 20px 40px;
+  padding: 24px 20px 96px;
   width: 100%;
   max-width: 620px;
 }
@@ -472,6 +474,49 @@
   background-color: rgb(255 255 255);
 }
 
+/* Product showcase pagination = segmented progress bar (matches original).
+   A centered horizontal track of equal-width 4px segments; the active slide's
+   segment is solid white, the rest are dim. Overrides the shared dot styles. */
+.carousel-showcase.product-showcase .carousel-showcase-slide-indicators,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-indicators {
+  flex-wrap: nowrap;
+  gap: 4px;
+  width: min(623px, 80%);
+  max-width: 623px;
+  margin: 0 auto;
+  padding: 0;
+  background-color: transparent;
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.carousel-showcase.product-showcase .carousel-showcase-slide-indicator,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-indicator {
+  flex: 1 1 0;
+}
+
+/* stylelint-disable no-descending-specificity */
+.carousel-showcase.product-showcase .carousel-showcase-slide-indicator button,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-indicator button {
+  width: 100%;
+  height: 4px;
+  border-radius: 0;
+  background-color: rgb(255 255 255 / 35%);
+}
+
+.carousel-showcase.product-showcase .carousel-showcase-slide-indicator button:disabled,
+.carousel-showcase.product-showcase .carousel-showcase-slide-indicator button:hover,
+.carousel-showcase.product-showcase .carousel-showcase-slide-indicator button:focus-visible,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-indicator button:disabled,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-indicator button:hover,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-indicator button:focus-visible {
+  background-color: rgb(255 255 255);
+}
+/* stylelint-enable no-descending-specificity */
+
 /* Prev / next navigation arrows.
    Source: 60px grey (rgb(130,130,130)) circles, white chevron, at left/right
    36px, vertically at ~45%. Hidden on mobile, shown from the large breakpoint
@@ -480,7 +525,7 @@
   display: none;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+/* stylelint-disable no-descending-specificity */
 .carousel-showcase .carousel-showcase-navigation-buttons button {
   position: absolute;
   top: 45%;
@@ -509,6 +554,7 @@
 .carousel-showcase .carousel-showcase-navigation-buttons button:focus-visible {
   background-color: rgb(90 90 92);
 }
+/* stylelint-enable no-descending-specificity */
 
 .carousel-showcase .carousel-showcase-navigation-buttons button::after {
   display: block;
