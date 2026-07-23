@@ -1,0 +1,38 @@
+{
+  "variantName": "hero-luxury",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-07-23T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/",
+    "originPage": "MG Select homepage",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "hero",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "background image + heading + 1 CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "luxury/automotive brand homepages",
+      "full-bleed photographic hero banners",
+      "campaign/collaboration landing headers"
+    ],
+    "notSuitableFor": [
+      "text-only headers without a background image",
+      "compact page sections needing minimal vertical space"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-23T00:00:00.000Z"
+  }
+}

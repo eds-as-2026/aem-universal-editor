@@ -113,6 +113,36 @@
           }
         },
         {
+          "title": "Carousel Showcase",
+          "id": "carousel-showcase",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Carousel Showcase",
+                  "filter": "carousel-showcase"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Carousel Showcase Slide",
+          "id": "carousel-showcase-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Carousel Showcase Slide",
+                  "model": "carousel-showcase-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Columns",
           "id": "columns",
           "plugins": {
@@ -143,6 +173,21 @@
           }
         },
         {
+          "title": "Hero Luxury",
+          "id": "hero-luxury",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Hero Luxury",
+                  "model": "hero-luxury"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -152,6 +197,38 @@
                 "template": {
                   "name": "Hero",
                   "model": "hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Tabs Timeline",
+          "id": "tabs-timeline",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Tabs Timeline",
+                  "filter": "tabs-timeline"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Tabs Timeline Item",
+          "id": "tabs-timeline-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Tab",
+                  "model": "tabs-timeline-item",
+                  "title": "Tab Name",
+                  "content_headingType": "h3"
                 }
               }
             }

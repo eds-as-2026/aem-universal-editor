@@ -1,0 +1,40 @@
+{
+  "variantName": "carousel-showcase",
+  "baseBlock": "carousel",
+  "version": "1.0.0",
+  "created": "2026-07-23T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/",
+    "originPage": "MG Select homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "spacious",
+    "purpose": "product-showcase",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "per-slide: full-bleed image + optional title/description/CTA",
+    "buttonCount": 2,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "full-bleed dark product/image showcase carousels",
+      "dealer/showroom city launch galleries",
+      "auto-scrolling image marquees/galleries",
+      "cinematic rotating hero-like slides with overlaid text and CTAs"
+    ],
+    "notSuitableFor": [
+      "light compact card grids",
+      "static single-image content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 3,
+    "lastUsed": "2026-07-23T00:00:00.000Z",
+    "notes": "Reused across three sequences on the homepage: productShowcase, brandManifesto image marquee, and dealerCarousel."
+  }
+}

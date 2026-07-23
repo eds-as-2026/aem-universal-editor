@@ -1,0 +1,38 @@
+{
+  "variantName": "tabs-timeline",
+  "baseBlock": "tabs",
+  "version": "1.0.0",
+  "created": "2026-07-23T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/",
+    "originPage": "MG Select homepage",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "heritage-timeline",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "per-tab: year label + heading + paragraph + image",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "year-based heritage/history timelines",
+      "tabbed content switchers with image + rich text panels",
+      "milestone or chronology presentations"
+    ],
+    "notSuitableFor": [
+      "simple two-column layouts",
+      "content that should be visible all at once without tabbing"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-23T00:00:00.000Z"
+  }
+}

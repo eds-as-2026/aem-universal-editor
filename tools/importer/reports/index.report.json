@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "url": "https://www.mgselect.co.in/",
+  "path": "index",
+  "timestamp": "2026-07-23T09:47:34.071Z",
+  "title": "Latest Luxury cars and experiences by Morris Garages In India | MG Select",
+  "template": "homepage",
+  "blocks": [
+    "hero-luxury",
+    "carousel-showcase",
+    "carousel-showcase",
+    "carousel-showcase",
+    "tabs-timeline"
+  ]
+}

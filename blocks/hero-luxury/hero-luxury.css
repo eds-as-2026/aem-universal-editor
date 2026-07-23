@@ -1,0 +1,117 @@
+/* Block: hero-luxury -- full-bleed photographic hero with bottom-centered overlay */
+
+/* Full-bleed: escape the section max-width/padding */
+.hero-luxury-container {
+  margin: 0;
+  padding: 0;
+}
+
+.hero-luxury-container .hero-luxury-wrapper {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-luxury {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 70vh;
+  padding: 40px 24px 48px;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Row 1 = image cell -> rebuilt <picture> as full-bleed background */
+.hero-luxury > div:first-child {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+}
+
+/* Row 2 = content cell (heading + CTA), overlaid, bottom-centered */
+.hero-luxury > div:last-child {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-luxury > div:first-child > div {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-luxury > div:last-child > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+}
+
+.hero-luxury picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-luxury picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-luxury h5 {
+  margin: 0;
+  color: rgb(255 255 255);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.28;
+  letter-spacing: 0.16px;
+  text-transform: none;
+}
+
+.hero-luxury p {
+  margin: 0;
+}
+
+.hero-luxury a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 8px 20px;
+  border: 1px solid rgb(244 240 238);
+  border-radius: 0;
+  color: rgb(255 255 255);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0.16px;
+  text-transform: none;
+  text-decoration: underline;
+}
+
+.hero-luxury a:hover {
+  color: rgb(255 255 255);
+  background-color: rgb(255 255 255 / 12%);
+}
+
+@media (width >= 900px) {
+  .hero-luxury {
+    min-height: 90vh;
+    padding: 40px 32px 64px;
+  }
+
+  .hero-luxury h5 {
+    font-size: 30px;
+    line-height: 32px;
+  }
+}

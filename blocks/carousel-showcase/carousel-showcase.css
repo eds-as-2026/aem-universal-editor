@@ -1,0 +1,321 @@
+/* carousel-showcase — full-bleed dark cinematic carousel.
+   Values extracted from source product showcase (mgselect.co.in). */
+
+/* Break out of the section's 1200px max-width / padding for full-bleed slides. */
+.carousel-showcase-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.carousel-showcase {
+  --carousel-showcase-height: min(56.25vw, calc(100dvh - var(--nav-height)));
+
+  background-color: var(--dark-background-color);
+  color: var(--dark-text-color);
+  position: relative;
+}
+
+.carousel-showcase .carousel-showcase-slides-container {
+  position: relative;
+}
+
+.carousel-showcase .carousel-showcase-slides,
+.carousel-showcase .carousel-showcase-slide-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-showcase .carousel-showcase-slides {
+  display: flex;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+}
+
+.carousel-showcase .carousel-showcase-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-showcase .carousel-showcase-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  position: relative;
+  width: 100%;
+  height: var(--carousel-showcase-height);
+  min-height: 320px;
+}
+
+/* Full-bleed background image, object-fit cover (source: w-100 h-100 object-fit cover). */
+.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-image {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-image picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-image picture > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Subtle bottom gradient scrim so white text stays legible over bright images. */
+.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 65%) 0%, rgb(0 0 0 / 0%) 45%);
+  pointer-events: none;
+}
+
+/* Text overlay: bottom-left anchored, transparent (no box), white text.
+   Source: position absolute, left 36px, bottom 140px, text-align start,
+   flex column, align-items-start, max-width ~537px. */
+.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-content {
+  z-index: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  color: var(--dark-text-color);
+  background: none;
+  text-align: left;
+  margin: 0;
+  padding: 24px 20px 40px;
+  width: 100%;
+  max-width: 620px;
+}
+
+.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-content:empty {
+  display: none;
+}
+
+/* Slide heading — source h3: 44.7px, 700, line-height 1.2, ls 0.16px, white. */
+.carousel-showcase .carousel-showcase-slide-content h1,
+.carousel-showcase .carousel-showcase-slide-content h2,
+.carousel-showcase .carousel-showcase-slide-content h3,
+.carousel-showcase .carousel-showcase-slide-content h4,
+.carousel-showcase .carousel-showcase-slide-content h5,
+.carousel-showcase .carousel-showcase-slide-content h6 {
+  margin: 0;
+  color: var(--dark-text-color);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: var(--heading-font-size-l);
+  line-height: 1.2;
+  letter-spacing: 0.16px;
+}
+
+/* Tagline — source p: 18px, line-height ~1.33, white, margin-top 16px. */
+.carousel-showcase .carousel-showcase-slide-content p {
+  margin: 16px 0 0;
+  color: var(--dark-text-color);
+  font-size: var(--body-font-size-m);
+  line-height: 1.33;
+}
+
+/* CTA row: links stack on mobile, sit inline on wider viewports.
+   The block JS wraps each authored link in its own <p>. */
+.carousel-showcase .carousel-showcase-slide-content p:has(> a) {
+  margin-top: 20px;
+}
+
+.carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) {
+  margin-top: 12px;
+}
+
+/* Sharp-cornered CTA buttons.
+   1st link (EXPLORE NOW / primary): solid black bg, white text.
+   2nd link (DOWNLOAD BROCHURE / secondary): transparent, near-white outline.
+   Source: padding 8px 20px, border-radius 0, 16px, weight 400, ls 0.16px. */
+.carousel-showcase .carousel-showcase-slide-content a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px 20px;
+  border: 0;
+  border-radius: 0;
+  background-color: rgb(0 0 0);
+  color: var(--dark-text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  letter-spacing: 0.16px;
+  line-height: 1.25;
+  text-decoration: none;
+  text-transform: none;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.carousel-showcase .carousel-showcase-slide-content a:any-link:hover,
+.carousel-showcase .carousel-showcase-slide-content a:any-link:focus-visible {
+  background-color: rgb(255 255 255);
+  border-color: rgb(255 255 255);
+  color: var(--dark-background-color);
+  text-decoration: none;
+}
+
+/* Second CTA = outlined "ghost" variant (source: 1px solid rgb(244,240,238)). */
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link {
+  background-color: transparent;
+  border: 1px solid rgb(244 240 238);
+}
+
+.carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link:hover,
+.carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link:focus-visible {
+  background-color: rgb(255 255 255);
+  border-color: rgb(255 255 255);
+  color: var(--dark-background-color);
+}
+
+/* Dealer variant: single linked city name — render as a plain white label,
+   not a filled button, matching the source city-launch slides. */
+.carousel-showcase .carousel-showcase-slide-content:has(> p:only-child > a:only-child) a:any-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--dark-text-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-m);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0.16px;
+}
+
+.carousel-showcase .carousel-showcase-slide-content:has(> p:only-child > a:only-child) a:any-link:hover,
+.carousel-showcase .carousel-showcase-slide-content:has(> p:only-child > a:only-child) a:any-link:focus-visible {
+  background: none;
+  color: rgb(255 255 255);
+  text-decoration: underline;
+}
+
+/* Slide indicators (dots) */
+.carousel-showcase .carousel-showcase-slide-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 12px;
+  background-color: var(--dark-background-color);
+  line-height: 0;
+}
+
+.carousel-showcase .carousel-showcase-slide-indicator button {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 35%);
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.carousel-showcase .carousel-showcase-slide-indicator button:disabled,
+.carousel-showcase .carousel-showcase-slide-indicator button:hover,
+.carousel-showcase .carousel-showcase-slide-indicator button:focus-visible {
+  background-color: rgb(255 255 255);
+}
+
+/* Prev / next navigation arrows */
+.carousel-showcase .carousel-showcase-navigation-buttons {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-showcase .carousel-showcase-navigation-buttons button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background-color: rgb(0 0 0 / 35%);
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.carousel-showcase .carousel-showcase-navigation-buttons button:hover,
+.carousel-showcase .carousel-showcase-navigation-buttons button:focus-visible {
+  background-color: rgb(0 0 0 / 70%);
+}
+
+.carousel-showcase .carousel-showcase-navigation-buttons button::after {
+  display: block;
+  content: '';
+  border: 2px solid rgb(255 255 255);
+  border-bottom: 0;
+  border-left: 0;
+  height: 12px;
+  width: 12px;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 2px);
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.carousel-showcase .carousel-showcase-navigation-buttons button.slide-next::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+  left: calc(50% - 2px);
+}
+
+@media (width >= 600px) {
+  .carousel-showcase .carousel-showcase-navigation-buttons {
+    left: 24px;
+    right: 24px;
+  }
+}
+
+@media (width >= 900px) {
+  .carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-content {
+    padding: 0 36px 140px;
+    max-width: 620px;
+  }
+
+  /* Slide heading desktop — source measured 44.7px. */
+  .carousel-showcase .carousel-showcase-slide-content h1,
+  .carousel-showcase .carousel-showcase-slide-content h2,
+  .carousel-showcase .carousel-showcase-slide-content h3,
+  .carousel-showcase .carousel-showcase-slide-content h4,
+  .carousel-showcase .carousel-showcase-slide-content h5,
+  .carousel-showcase .carousel-showcase-slide-content h6 {
+    font-size: 45px;
+    line-height: 1.2;
+  }
+
+  /* CTAs sit side by side on desktop. */
+  .carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) {
+    margin-top: 20px;
+  }
+
+  .carousel-showcase .carousel-showcase-slide-content a:any-link {
+    padding: 8px 20px;
+    font-size: var(--body-font-size-s);
+  }
+}

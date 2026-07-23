@@ -1,0 +1,158 @@
+/* tabs-timeline -- MG Select heritage timeline
+ * Source: mgselect.co.in "OUR HERITAGE" section (white/light theme, dark text).
+ * Values derived from source computed styles. */
+
+.tabs-timeline {
+  background-color: var(--background-color); /* white */
+  color: var(--text-color); /* rgb(30 30 32) */
+  padding: 16px 0;
+}
+
+/* --- Eyebrow tab list ("OUR HERITAGE") --- */
+.tabs-timeline .tabs-timeline-list {
+  display: flex;
+  gap: 0;
+  max-width: 100%;
+  margin: 0 0 24px;
+  overflow-x: auto;
+}
+
+.tabs-timeline .tabs-timeline-list button {
+  flex: 0 0 max-content;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--text-color);
+  border-radius: 0;
+  padding: 12px 20px;
+  background-color: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.16px;
+  text-align: center;
+  text-overflow: unset;
+  white-space: nowrap;
+  overflow: unset;
+  cursor: pointer;
+}
+
+.tabs-timeline .tabs-timeline-list button[aria-selected='true'] {
+  border-bottom: 1px solid var(--text-color);
+  background-color: transparent;
+  font-weight: 400;
+  cursor: initial;
+}
+
+/* --- Panel --- */
+.tabs-timeline .tabs-timeline-panel {
+  padding: 0;
+  border: 0;
+  overflow: visible;
+}
+
+.tabs-timeline .tabs-timeline-panel[aria-hidden='true'] {
+  display: none;
+}
+
+/* --- Intro (heading + hero image) --- */
+.tabs-timeline .tabs-timeline-intro h3 {
+  margin: 0 0 20px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-color);
+  text-align: left;
+}
+
+.tabs-timeline .tabs-timeline-intro p {
+  margin: 0 0 24px;
+}
+
+.tabs-timeline .tabs-timeline-intro picture,
+.tabs-timeline .tabs-timeline-intro img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tabs-timeline .tabs-timeline-intro img {
+  object-fit: cover;
+}
+
+/* --- Timeline track (horizontal scroller of year cards) --- */
+.tabs-timeline .tabs-timeline-track {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 20px;
+  padding-bottom: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabs-timeline .tabs-timeline-card {
+  flex: 0 0 240px;
+  scroll-snap-align: start;
+}
+
+.tabs-timeline .tabs-timeline-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--text-color);
+}
+
+.tabs-timeline .tabs-timeline-year {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-color);
+}
+
+.tabs-timeline .tabs-timeline-card-title {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-s);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+.tabs-timeline .tabs-timeline-card p {
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.tabs-timeline .tabs-timeline-card picture,
+.tabs-timeline .tabs-timeline-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* --- Desktop --- */
+@media (width >= 900px) {
+  .tabs-timeline {
+    padding: 40px 0;
+  }
+
+  .tabs-timeline .tabs-timeline-intro h3 {
+    margin: 0 0 32px;
+    font-size: 37px; /* source heading computed ~36.9px */
+  }
+
+  .tabs-timeline .tabs-timeline-card {
+    flex: 0 0 270px;
+  }
+}
+
+.tabs-timeline .tabs-timeline-list button p {
+  margin: 0;
+}

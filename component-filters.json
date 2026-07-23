@@ -25,6 +25,12 @@
     ]
   },
   {
+    "id": "carousel-showcase",
+    "components": [
+      "carousel-showcase-item"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -37,6 +43,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "tabs-timeline",
+    "components": [
+      "tabs-timeline-item"
     ]
   }
 ]

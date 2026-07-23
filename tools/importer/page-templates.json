@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "homepage",
+      "urls": [
+        "https://www.mgselect.co.in/"
+      ],
+      "representativeUrl": "https://www.mgselect.co.in/",
+      "coverageGaps": [],
+      "description": "MG Select homepage with hero banner, product showcase carousel, brand manifesto, dealer/showroom carousel, and heritage timeline tabs",
+      "blocks": [
+        {
+          "name": "hero-luxury",
+          "instances": [
+            "div.banner.mg-select-scroller.light-header"
+          ]
+        },
+        {
+          "name": "carousel-showcase",
+          "instances": [
+            "div.productShowcase.mg-select-scroller.dark-header",
+            "div.brandManifesto.mg-select-scroller div.brand-manifesto__gallery",
+            "div.carousel.panelcontainer.mg-select-scroller.dark-header"
+          ]
+        },
+        {
+          "name": "tabs-timeline",
+          "instances": [
+            "div.tabs.panelcontainer.mg-header-white.mg-select-scroller"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "hero",
+          "name": "Hero Banner",
+          "selector": "div.banner.mg-select-scroller.light-header",
+          "style": null,
+          "blocks": [
+            "hero-luxury"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "productShowcase",
+          "name": "Product Showcase",
+          "selector": "div.productShowcase.mg-select-scroller.dark-header",
+          "style": null,
+          "blocks": [
+            "carousel-showcase"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "brandManifesto",
+          "name": "Brand Manifesto",
+          "selector": "div.brandManifesto.mg-select-scroller",
+          "style": "light",
+          "blocks": [
+            "carousel-showcase"
+          ],
+          "defaultContent": [
+            "div.brand-manifesto__content"
+          ]
+        },
+        {
+          "id": "dealerCarousel",
+          "name": "Dealer Carousel",
+          "selector": "div.carousel.panelcontainer.mg-select-scroller.dark-header",
+          "style": null,
+          "blocks": [
+            "carousel-showcase"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "heritageTabs",
+          "name": "Heritage Timeline",
+          "selector": "div.tabs.panelcontainer.mg-header-white.mg-select-scroller",
+          "style": "light",
+          "blocks": [
+            "tabs-timeline"
+          ],
+          "defaultContent": [
+            "div.timeline-container__container > div.d-flex.flex-column"
+          ]
+        }
+      ]
+    }
+  ]
+}
