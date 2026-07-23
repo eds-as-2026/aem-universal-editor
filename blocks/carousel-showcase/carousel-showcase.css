@@ -311,77 +311,124 @@
 /* stylelint-enable no-descending-specificity */
 
 /* ---------------------------------------------------------------------------
-   DEALER CAROUSEL — light layout. Each slide is a single composite city image
-   (the green heading, framed collage and "Know More" button are baked into the
-   artwork). We just present it centered and clickable on the light background.
+   DEALER CAROUSEL — dark full-bleed stage; one tall portrait city image at a
+   time, shown object-fit: contain over a shared dealer backdrop. Thin bar
+   pagination, flat line-arrow nav. Values extracted from computed styles on
+   https://www.mgselect.co.in/ (.carousel.panelcontainer.mg-select-scroller).
    --------------------------------------------------------------------------- */
 .carousel-showcase.dealer-carousel {
-  --dealer-green: rgb(20 66 45);
-  --carousel-showcase-height: auto;
+  --carousel-showcase-height: min(90vh, 720px);
 
-  background-color: var(--background-color);
-  color: var(--text-color);
-  padding: 32px 0;
+  background-color: var(--dark-background-color);
+  color: var(--dark-text-color);
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
+/* One full-width slide at a time; tall portrait stage with the shared dealer
+   backdrop behind the transparent city-art cutout. */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide {
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
-  height: auto;
+  height: var(--carousel-showcase-height);
   min-height: 0;
-  padding: 0 72px;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--dark-background-color);
+  background-image: url('https://mgmotor.scene7.com/is/image/mgmotor/dealer-carousel-bg?fmt=webp-alpha&resMode=bisharp&fit=constrain&qlt=90&wid=1920');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-/* The composite artwork, centered and constrained (not full-bleed). */
+/* Portrait city art — contained + centered, filling the stage. */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-image {
-  position: static;
-  inset: auto;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: block;
+}
+
+.carousel-showcase.dealer-carousel .carousel-showcase-dealer-link {
+  display: flex;
   width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-image picture {
-  position: static;
-  display: block;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-image picture > img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
+  object-position: 50% 50%;
 }
 
-/* Whole artwork is the dealer link. */
-.carousel-showcase.dealer-carousel .carousel-showcase-dealer-link {
-  display: block;
-  width: 100%;
-}
-
-/* Dealer dots sit on the light background, so tint them green. */
+/* Thin horizontal bar pagination (20x3, gap 6, centered, bottom 32). */
 /* stylelint-disable no-descending-specificity */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-indicators {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  max-width: none;
+  gap: 6px;
+  padding: 0;
   background-color: transparent;
-  padding: 24px 12px 0;
+}
+
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator {
+  flex: 0 0 auto;
 }
 
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button {
-  background-color: rgb(20 66 45 / 30%);
+  width: 20px;
+  height: 3px;
+  border-radius: 0;
+  background-color: rgb(217 217 217 / 30%);
 }
 
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button:disabled,
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button:hover,
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button:focus-visible {
-  background-color: var(--dealer-green);
+  background-color: rgb(217 217 217);
+}
+/* stylelint-enable no-descending-specificity */
+
+/* Flat white line-arrow nav on the grey circles (not a chevron). */
+/* stylelint-disable no-descending-specificity */
+.carousel-showcase.dealer-carousel .carousel-showcase-navigation-buttons button::after {
+  border: 0;
+  width: 24px;
+  height: 16px;
+  background-color: rgb(255 255 255);
+  transform: translate(-50%, -50%);
+  mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16" fill="none" stroke="%23fff" stroke-width="2"%3E%3Cpath d="M1 8h21M15 1l7 7-7 7"/%3E%3C/svg%3E') center / contain no-repeat;
+  left: 50%;
+  top: 50%;
+}
+
+.carousel-showcase.dealer-carousel .carousel-showcase-navigation-buttons button.slide-prev::after {
+  transform: translate(-50%, -50%) scaleX(-1);
 }
 /* stylelint-enable no-descending-specificity */
 
 @media (width >= 900px) {
-  .carousel-showcase.dealer-carousel .carousel-showcase-slide {
-    padding: 0 120px;
+  .carousel-showcase.dealer-carousel {
+    --carousel-showcase-height: min(100vh, 900px);
   }
 }
 
@@ -576,7 +623,6 @@
 .carousel-showcase .carousel-showcase-navigation-buttons button:focus-visible {
   background-color: rgb(90 90 92);
 }
-/* stylelint-enable no-descending-specificity */
 
 .carousel-showcase .carousel-showcase-navigation-buttons button::after {
   display: block;
@@ -596,6 +642,7 @@
   transform: translate(-50%, -50%) rotate(45deg);
   left: calc(50% - 3px);
 }
+/* stylelint-enable no-descending-specificity */
 
 @media (width >= 900px) {
   .carousel-showcase .carousel-showcase-navigation-buttons {
