@@ -433,16 +433,27 @@
 }
 
 /* ---------------------------------------------------------------------------
-   GALLERY MARQUEE — continuously auto-scrolling strip of image-only tiles.
-   No nav arrows, no dots. Track is duplicated in JS for a seamless loop.
+   GALLERY MARQUEE — continuous horizontal marquee of image-only tiles.
+   Source (brand-manifesto__gallery) is a Swiper free-scroll marquee on white;
+   fixed-width tiles keep the source aspect ratio at every width. Track is
+   duplicated in JS so translateX(-50%) loops seamlessly. Values extracted
+   from computed styles on mgselect.co.in.
    --------------------------------------------------------------------------- */
 .carousel-showcase.gallery-marquee {
-  --marquee-tile-height: 140px;
+  /* source: 366x342 tiles, 19px gap at desktop; scaled down for narrower vw */
   --marquee-gap: 12px;
+  --marquee-slide-width: 200px;
+  --marquee-tile-height: 187px;
+  --marquee-duration: 30s;
 
   background-color: var(--background-color);
-  padding: 24px 0;
   overflow: hidden;
+  width: 100vw;
+  max-width: 100vw;
+
+  /* Break the strip out to the full viewport from the constrained section. */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .carousel-showcase.gallery-marquee .carousel-showcase-slides-container {
@@ -451,40 +462,47 @@
 
 .carousel-showcase.gallery-marquee .carousel-showcase-marquee-track {
   display: flex;
-  gap: var(--marquee-gap);
+  align-items: center;
   width: max-content;
   overflow: visible;
   scroll-snap-type: none;
-  animation: carousel-showcase-marquee 40s linear infinite;
+  animation: carousel-showcase-marquee var(--marquee-duration) linear infinite;
 }
 
-.carousel-showcase.gallery-marquee:hover .carousel-showcase-marquee-track {
+.carousel-showcase.gallery-marquee:hover .carousel-showcase-marquee-track,
+.carousel-showcase.gallery-marquee:focus-within .carousel-showcase-marquee-track {
   animation-play-state: paused;
 }
 
+/* Fixed tile width + trailing gap. The duplicated set makes translateX(-50%)
+   return the track to origin for a seamless loop at any viewport width. */
 .carousel-showcase.gallery-marquee .carousel-showcase-slide {
   flex: 0 0 auto;
-  width: auto;
+  width: var(--marquee-slide-width);
   height: var(--marquee-tile-height);
   min-height: 0;
+  margin: 0 var(--marquee-gap) 0 0;
   display: block;
 }
 
 .carousel-showcase.gallery-marquee .carousel-showcase-slide-image {
   position: static;
+  width: 100%;
   height: 100%;
 }
 
 .carousel-showcase.gallery-marquee .carousel-showcase-slide-image picture {
   position: static;
+  width: 100%;
   height: 100%;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-showcase.gallery-marquee .carousel-showcase-slide-image picture > img {
+  width: 100%;
   height: 100%;
-  width: auto;
   object-fit: contain;
+  object-position: center;
 }
 
 /* Image-only tiles: any empty content cell is hidden. */
@@ -497,16 +515,36 @@
   to { transform: translateX(-50%); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .carousel-showcase.gallery-marquee .carousel-showcase-marquee-track {
-    animation: none;
+@media (width >= 768px) {
+  .carousel-showcase.gallery-marquee {
+    --marquee-gap: 16px;
+    --marquee-slide-width: 300px;
+    --marquee-tile-height: 280px;
+    --marquee-duration: 40s;
   }
 }
 
-@media (width >= 900px) {
+@media (width >= 1440px) {
   .carousel-showcase.gallery-marquee {
-    --marquee-tile-height: 183px;
-    --marquee-gap: 16px;
+    --marquee-gap: 19px;
+    --marquee-slide-width: 366px;
+    --marquee-tile-height: 342px;
+    --marquee-duration: 45s;
+  }
+}
+
+/* Respect reduced-motion: stop the marquee and allow manual scroll. */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-showcase.gallery-marquee {
+    overflow-x: auto;
+  }
+
+  .carousel-showcase.gallery-marquee .carousel-showcase-marquee-track {
+    animation: none;
+  }
+
+  .carousel-showcase.gallery-marquee .carousel-showcase-slide-clone {
+    display: none;
   }
 }
 
