@@ -4,7 +4,11 @@
     "aem-universal-editor": {
       "previewOrg": "eds-as-2026",
       "previewSite": "aem-universal-editor",
-      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json"
+      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json",
+      "aemSitePath": "/content/aem-universal-editor",
+      "aemAssetsFolderPath": "/content/dam/aem-universal-editor",
+      "aemSiteName": "aem-universal-editor",
+      "aemSiteTitle": "aem-universal-editor"
     }
   }
 }
