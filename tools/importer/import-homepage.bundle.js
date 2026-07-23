@@ -241,6 +241,7 @@ var CustomImportScript = (() => {
           const year = card.querySelector(".model-year");
           const overlay = card.querySelector(".overlay");
           const tooltip = card.querySelector(".timeline-card-tooltip");
+          const cardImg = card.querySelector(".timeline-card__picture img, picture img, img");
           let cardTitle = "";
           if (overlay) {
             const clone = overlay.cloneNode(true);
@@ -256,6 +257,11 @@ var CustomImportScript = (() => {
             const h = document.createElement("h4");
             h.textContent = cardTitle;
             richParts.push(h);
+          }
+          if (cardImg) {
+            const p = document.createElement("p");
+            p.appendChild(cardImg);
+            richParts.push(p);
           }
           if (description) {
             const p = document.createElement("p");

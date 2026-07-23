@@ -74,13 +74,16 @@ export default function parse(element, { document }) {
         contentFrag.appendChild(firstImage);
       }
 
-      // content_richtext: the full timeline narrative (each card as year heading +
-      // title + description).
+      // content_richtext: the full timeline narrative. Each card = a year
+      // heading, its own image, then the description. Keeping the per-card
+      // image inline (right after its year heading) lets the block JS split
+      // the flat richtext into cards and show the correct image on each.
       const richParts = [];
       cards.forEach((card) => {
         const year = card.querySelector('.model-year');
         const overlay = card.querySelector('.overlay');
         const tooltip = card.querySelector('.timeline-card-tooltip');
+        const cardImg = card.querySelector('.timeline-card__picture img, picture img, img');
 
         // Card title = overlay text minus tooltip text and the decorative "+" span.
         let cardTitle = '';
@@ -99,6 +102,12 @@ export default function parse(element, { document }) {
           const h = document.createElement('h4');
           h.textContent = cardTitle;
           richParts.push(h);
+        }
+        // Per-card image directly under its heading.
+        if (cardImg) {
+          const p = document.createElement('p');
+          p.appendChild(cardImg);
+          richParts.push(p);
         }
         if (description) {
           const p = document.createElement('p');
