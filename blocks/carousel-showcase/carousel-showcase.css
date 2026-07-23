@@ -311,9 +311,9 @@
 /* stylelint-enable no-descending-specificity */
 
 /* ---------------------------------------------------------------------------
-   DEALER CAROUSEL — light editorial layout: green city heading, framed
-   landscape image, and a solid dark-green "Know More" button. Matches the
-   original (light background, centered content, not full-bleed).
+   DEALER CAROUSEL — light layout. Each slide is a single composite city image
+   (the green heading, framed collage and "Know More" button are baked into the
+   artwork). We just present it centered and clickable on the light background.
    --------------------------------------------------------------------------- */
 .carousel-showcase.dealer-carousel {
   --dealer-green: rgb(20 66 45);
@@ -321,7 +321,7 @@
 
   background-color: var(--background-color);
   color: var(--text-color);
-  padding: 24px 0 40px;
+  padding: 32px 0;
 }
 
 .carousel-showcase.dealer-carousel .carousel-showcase-slide {
@@ -330,88 +330,42 @@
   justify-content: flex-start;
   height: auto;
   min-height: 0;
-  gap: 16px;
   padding: 0 72px;
 }
 
-/* City heading — green, uppercase, centered above the image. */
-.carousel-showcase.dealer-carousel .carousel-showcase-dealer-title {
-  order: -1;
-  margin: 0;
-  color: var(--dealer-green);
-  font-family: var(--heading-font-family);
-  font-weight: 700;
-  font-size: var(--heading-font-size-l);
-  line-height: 1.1;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-/* Framed landscape image (not full-bleed). */
+/* The composite artwork, centered and constrained (not full-bleed). */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-image {
   position: static;
   inset: auto;
   width: 100%;
-  max-width: 980px;
-  aspect-ratio: 16 / 7;
+  max-width: 1120px;
   margin: 0 auto;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-image picture {
   position: static;
+  display: block;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-image picture > img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
 }
 
-.carousel-showcase.dealer-carousel .carousel-showcase-slide-content {
-  position: static;
-  display: flex;
-  justify-content: center;
+/* Whole artwork is the dealer link. */
+.carousel-showcase.dealer-carousel .carousel-showcase-dealer-link {
+  display: block;
   width: 100%;
-  margin: 0;
-  padding: 8px 0 0;
 }
-
-/* "Know More" button — solid dark green, white text. */
-/* stylelint-disable no-descending-specificity */
-.carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 32px;
-  border: 0;
-  border-radius: 0;
-  background-color: var(--dealer-green);
-  color: rgb(255 255 255);
-  font-family: var(--body-font-family);
-  font-size: var(--body-font-size-s);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link:hover,
-.carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link:focus-visible {
-  background-color: rgb(12 45 30);
-  color: rgb(255 255 255);
-  text-decoration: none;
-}
-/* stylelint-enable no-descending-specificity */
 
 /* Dealer dots sit on the light background, so tint them green. */
 /* stylelint-disable no-descending-specificity */
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-indicators {
   background-color: transparent;
-  padding: 20px 12px 0;
+  padding: 24px 12px 0;
 }
 
 .carousel-showcase.dealer-carousel .carousel-showcase-slide-indicator button {
@@ -428,10 +382,6 @@
 @media (width >= 900px) {
   .carousel-showcase.dealer-carousel .carousel-showcase-slide {
     padding: 0 120px;
-  }
-
-  .carousel-showcase.dealer-carousel .carousel-showcase-dealer-title {
-    font-size: var(--heading-font-size-xl);
   }
 }
 

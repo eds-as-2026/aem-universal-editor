@@ -137,33 +137,32 @@ function addThemeToggle(block) {
   block.append(toggle);
 }
 
-// Dealer carousel: each slide shows a city heading above a framed image with a
-// "Know More" button. Source content is [image] + [city link]; we lift the city
-// name into a heading and turn the link into the button, matching the original.
+// Dealer carousel: each slide is a single composite city image (the heading,
+// framed collage and "Know More" button are baked into the artwork on the
+// source). Source content is [image] + [city link]. We make the framed image
+// itself the clickable link and drop the separate text link so nothing is
+// duplicated on top of the artwork.
 function decorateDealer(block) {
   block.querySelectorAll('.carousel-showcase-slide').forEach((slide) => {
+    const imageCell = slide.querySelector('.carousel-showcase-slide-image');
     const content = slide.querySelector('.carousel-showcase-slide-content');
-    if (!content) return;
-    const link = content.querySelector('a[href]');
-    const img = slide.querySelector('.carousel-showcase-slide-image img');
-    const cityName = (link && link.textContent.trim())
-      || (img && img.getAttribute('alt'))
-      || '';
+    const picture = imageCell && imageCell.querySelector('picture, img');
+    const link = content && content.querySelector('a[href]');
 
-    const heading = document.createElement('h3');
-    heading.className = 'carousel-showcase-dealer-title';
-    heading.textContent = cityName;
-    // Place the city heading above the image within the slide.
-    slide.prepend(heading);
-
-    if (link) {
-      link.classList.add('carousel-showcase-dealer-cta');
-      // Only override the visible label when the source used the bare city
-      // name; keep any real CTA text an author may set later.
-      if (link.textContent.trim().toLowerCase() === cityName.toLowerCase()) {
-        link.textContent = 'Know More';
-      }
+    if (link && picture) {
+      // Wrap the framed image in the dealer link so the whole slide is clickable.
+      const wrapper = document.createElement('a');
+      wrapper.href = link.getAttribute('href');
+      wrapper.className = 'carousel-showcase-dealer-link';
+      const label = link.textContent.trim() || (picture.querySelector('img') || picture).getAttribute?.('alt') || '';
+      if (label) wrapper.setAttribute('aria-label', label);
+      picture.replaceWith(wrapper);
+      wrapper.append(picture);
     }
+
+    // Drop the separate text link/content cell — the artwork already carries
+    // the heading and Know More button.
+    if (content) content.remove();
   });
 }
 
