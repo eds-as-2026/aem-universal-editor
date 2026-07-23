@@ -98,6 +98,45 @@ function createSlide(row, slideIndex, id) {
   return slide;
 }
 
+// Product showcase image cell holds up to 3 grouped pictures (media_ prefix):
+// [0] product image, [1] light-theme background, [2] dark-theme background.
+// Tag them so CSS can layer the backgrounds behind the product and cross-fade
+// them with the theme toggle.
+function decorateShowcaseImages(block) {
+  block.querySelectorAll('.carousel-showcase-slide-image').forEach((cell) => {
+    const pictures = [...cell.querySelectorAll(':scope > picture')];
+    // Fallback: pictures may sit inside <p> wrappers from richtext round-trip.
+    if (pictures.length === 0) {
+      cell.querySelectorAll('p > picture').forEach((p) => pictures.push(p));
+    }
+    const [product, bgLight, bgDark] = pictures;
+    if (product) product.classList.add('carousel-showcase-product-image');
+    if (bgLight) bgLight.classList.add('carousel-showcase-bg', 'carousel-showcase-bg-light');
+    if (bgDark) bgDark.classList.add('carousel-showcase-bg', 'carousel-showcase-bg-dark');
+  });
+}
+
+// Interactive light/dark toggle for the product showcase. Matches the original:
+// a small control anchored bottom-left that flips the whole block's theme,
+// cross-fading the day/night backgrounds.
+function addThemeToggle(block) {
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'carousel-showcase-theme-toggle';
+  toggle.setAttribute('aria-pressed', 'false');
+  toggle.setAttribute('aria-label', 'Switch to dark theme');
+  toggle.innerHTML = `
+    <span class="carousel-showcase-theme-icon carousel-showcase-theme-icon-sun" aria-hidden="true"></span>
+    <span class="carousel-showcase-theme-icon carousel-showcase-theme-icon-moon" aria-hidden="true"></span>
+  `;
+  toggle.addEventListener('click', () => {
+    const isDark = block.classList.toggle('carousel-showcase-theme-dark');
+    toggle.setAttribute('aria-pressed', String(isDark));
+    toggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+  });
+  block.append(toggle);
+}
+
 // Gallery marquee: a continuously auto-scrolling strip of image-only tiles.
 // No prev/next, no dots. Slides are cloned once so the scroll loops seamlessly.
 function decorateMarquee(block, rows, id) {
@@ -189,6 +228,11 @@ export default async function decorate(block) {
 
   container.append(slidesWrapper);
   block.prepend(container);
+
+  if (variant === 'product-showcase') {
+    decorateShowcaseImages(block);
+    addThemeToggle(block);
+  }
 
   if (!isSingleSlide) {
     bindEvents(block);

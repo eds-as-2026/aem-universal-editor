@@ -66,7 +66,7 @@
           "component": "reference",
           "valueType": "string",
           "name": "media_image",
-          "label": "Background Image",
+          "label": "Product Image",
           "multi": false
         },
         {
@@ -74,7 +74,35 @@
           "valueType": "string",
           "name": "media_imageAlt",
           "value": "",
-          "label": "Background Alt"
+          "label": "Product Image Alt"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "media_backgroundLight",
+          "label": "Background (Light Theme)",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "media_backgroundLightAlt",
+          "value": "",
+          "label": "Background (Light Theme) Alt"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "media_backgroundDark",
+          "label": "Background (Dark Theme)",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "media_backgroundDarkAlt",
+          "value": "",
+          "label": "Background (Dark Theme) Alt"
         },
         {
           "component": "richtext",
