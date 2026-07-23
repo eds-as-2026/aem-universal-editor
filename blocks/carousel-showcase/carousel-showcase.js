@@ -1,5 +1,14 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+// Variant is authored via the block's "Style" select (classes field). When no
+// variant is chosen we default to the product-showcase look.
+const VARIANTS = ['product-showcase', 'gallery-marquee', 'dealer-carousel'];
+
+function getVariant(block) {
+  const found = VARIANTS.find((v) => block.classList.contains(v));
+  return found || 'product-showcase';
+}
+
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel-showcase');
   const slideIndex = parseInt(slide.dataset.slideIndex, 10);
@@ -70,10 +79,10 @@ function bindEvents(block) {
   });
 }
 
-function createSlide(row, slideIndex, carouselId) {
+function createSlide(row, slideIndex, id) {
   const slide = document.createElement('li');
   slide.dataset.slideIndex = slideIndex;
-  slide.setAttribute('id', `carousel-showcase-${carouselId}-slide-${slideIndex}`);
+  slide.setAttribute('id', `carousel-showcase-${id}-slide-${slideIndex}`);
   slide.classList.add('carousel-showcase-slide');
 
   row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
@@ -89,15 +98,53 @@ function createSlide(row, slideIndex, carouselId) {
   return slide;
 }
 
+// Gallery marquee: a continuously auto-scrolling strip of image-only tiles.
+// No prev/next, no dots. Slides are cloned once so the scroll loops seamlessly.
+function decorateMarquee(block, rows, id) {
+  const track = document.createElement('ul');
+  track.classList.add('carousel-showcase-slides', 'carousel-showcase-marquee-track');
+
+  rows.forEach((row, idx) => {
+    const slide = createSlide(row, idx, id);
+    moveInstrumentation(row, slide);
+    track.append(slide);
+    row.remove();
+  });
+
+  // Clone the set once for a seamless CSS loop (aria-hidden so AT ignores dupes).
+  [...track.children].forEach((slide) => {
+    const clone = slide.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.removeAttribute('id');
+    clone.classList.add('carousel-showcase-slide-clone');
+    track.append(clone);
+  });
+
+  const viewport = document.createElement('div');
+  viewport.classList.add('carousel-showcase-slides-container');
+  viewport.append(track);
+  block.prepend(viewport);
+}
+
 let carouselId = 0;
 export default async function decorate(block) {
   carouselId += 1;
-  block.setAttribute('id', `carousel-showcase-${carouselId}`);
-  const rows = block.querySelectorAll(':scope > div');
-  const isSingleSlide = rows.length < 2;
+  const id = carouselId;
+  block.setAttribute('id', `carousel-showcase-${id}`);
 
+  const variant = getVariant(block);
+  block.dataset.variant = variant;
   block.setAttribute('role', 'region');
-  block.setAttribute('aria-roledescription', 'Carousel');
+  block.setAttribute('aria-roledescription', variant === 'gallery-marquee' ? 'Image gallery' : 'Carousel');
+
+  const rows = [...block.querySelectorAll(':scope > div')];
+
+  if (variant === 'gallery-marquee') {
+    decorateMarquee(block, rows, id);
+    return;
+  }
+
+  const isSingleSlide = rows.length < 2;
 
   const container = document.createElement('div');
   container.classList.add('carousel-showcase-slides-container');
@@ -126,7 +173,7 @@ export default async function decorate(block) {
   }
 
   rows.forEach((row, idx) => {
-    const slide = createSlide(row, idx, carouselId);
+    const slide = createSlide(row, idx, id);
     moveInstrumentation(row, slide);
     slidesWrapper.append(slide);
 

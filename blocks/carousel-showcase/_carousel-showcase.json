@@ -9,6 +9,7 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Carousel Showcase",
+              "model": "carousel-showcase",
               "filter": "carousel-showcase"
             }
           }
@@ -33,6 +34,32 @@
   ],
   "models": [
     {
+      "id": "carousel-showcase",
+      "fields": [
+        {
+          "component": "select",
+          "name": "classes",
+          "value": "",
+          "label": "Style",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Product Showcase",
+              "value": "product-showcase"
+            },
+            {
+              "name": "Gallery Marquee",
+              "value": "gallery-marquee"
+            },
+            {
+              "name": "Dealer Carousel",
+              "value": "dealer-carousel"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "carousel-showcase-item",
       "fields": [
         {
@@ -47,7 +74,7 @@
           "valueType": "string",
           "name": "media_imageAlt",
           "value": "",
-          "label": "Bacgkround Alt"
+          "label": "Background Alt"
         },
         {
           "component": "richtext",

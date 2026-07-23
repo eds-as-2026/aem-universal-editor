@@ -1,5 +1,8 @@
-/* carousel-showcase — full-bleed dark cinematic carousel.
-   Values extracted from source product showcase (mgselect.co.in). */
+/* carousel-showcase — one block, three author-selectable variants:
+   .product-showcase (default) — full-bleed dark slide with text overlay + CTAs
+   .gallery-marquee            — continuously auto-scrolling image strip
+   .dealer-carousel            — full-bleed portrait photo slides with a city link
+   Values extracted from mgselect.co.in. */
 
 /* Break out of the section's 1200px max-width / padding for full-bleed slides. */
 .carousel-showcase-wrapper {
@@ -51,7 +54,7 @@
   min-height: 320px;
 }
 
-/* Full-bleed background image, object-fit cover (source: w-100 h-100 object-fit cover). */
+/* Full-bleed background image, object-fit cover. */
 .carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-image {
   position: absolute;
   inset: 0;
@@ -71,8 +74,14 @@
   object-position: center;
 }
 
-/* Subtle bottom gradient scrim so white text stays legible over bright images. */
-.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-image::after {
+/* ---------------------------------------------------------------------------
+   PRODUCT SHOWCASE (default) — text overlay + CTAs over a cinematic image.
+   Applies when the block has .product-showcase OR no variant class at all.
+   --------------------------------------------------------------------------- */
+
+/* Bottom gradient scrim so white text stays legible over bright images. */
+.carousel-showcase.product-showcase .carousel-showcase-slide .carousel-showcase-slide-image::after,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide .carousel-showcase-slide-image::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -80,10 +89,9 @@
   pointer-events: none;
 }
 
-/* Text overlay: bottom-left anchored, transparent (no box), white text.
-   Source: position absolute, left 36px, bottom 140px, text-align start,
-   flex column, align-items-start, max-width ~537px. */
-.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-content {
+/* Text overlay: bottom-left anchored, transparent, white text. */
+.carousel-showcase.product-showcase .carousel-showcase-slide-content,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content {
   z-index: 1;
   position: relative;
   display: flex;
@@ -99,17 +107,13 @@
   max-width: 620px;
 }
 
-.carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-content:empty {
+.carousel-showcase .carousel-showcase-slide-content:empty {
   display: none;
 }
 
-/* Slide heading — source h3: 44.7px, 700, line-height 1.2, ls 0.16px, white. */
-.carousel-showcase .carousel-showcase-slide-content h1,
-.carousel-showcase .carousel-showcase-slide-content h2,
-.carousel-showcase .carousel-showcase-slide-content h3,
-.carousel-showcase .carousel-showcase-slide-content h4,
-.carousel-showcase .carousel-showcase-slide-content h5,
-.carousel-showcase .carousel-showcase-slide-content h6 {
+/* Slide heading — source h3: ~45px, 700, line-height 1.2, ls 0.16px, white. */
+.carousel-showcase.product-showcase .carousel-showcase-slide-content :is(h1, h2, h3, h4, h5, h6),
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content :is(h1, h2, h3, h4, h5, h6) {
   margin: 0;
   color: var(--dark-text-color);
   font-family: var(--heading-font-family);
@@ -120,28 +124,29 @@
 }
 
 /* Tagline — source p: 18px, line-height ~1.33, white, margin-top 16px. */
-.carousel-showcase .carousel-showcase-slide-content p {
+.carousel-showcase.product-showcase .carousel-showcase-slide-content p,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content p {
   margin: 16px 0 0;
   color: var(--dark-text-color);
   font-size: var(--body-font-size-m);
   line-height: 1.33;
 }
 
-/* CTA row: links stack on mobile, sit inline on wider viewports.
-   The block JS wraps each authored link in its own <p>. */
-.carousel-showcase .carousel-showcase-slide-content p:has(> a) {
+.carousel-showcase.product-showcase .carousel-showcase-slide-content p:has(> a),
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content p:has(> a) {
   margin-top: 20px;
 }
 
-.carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) {
+.carousel-showcase.product-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a),
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content p:has(> a) + p:has(> a) {
   margin-top: 12px;
 }
 
 /* Sharp-cornered CTA buttons.
-   1st link (EXPLORE NOW / primary): solid black bg, white text.
-   2nd link (DOWNLOAD BROCHURE / secondary): transparent, near-white outline.
-   Source: padding 8px 20px, border-radius 0, 16px, weight 400, ls 0.16px. */
-.carousel-showcase .carousel-showcase-slide-content a:any-link {
+   1st link (primary): solid black bg, white text.
+   2nd link (secondary): transparent, near-white outline. */
+.carousel-showcase.product-showcase .carousel-showcase-slide-content a:any-link,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content a:any-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -162,31 +167,64 @@
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
-.carousel-showcase .carousel-showcase-slide-content a:any-link:hover,
-.carousel-showcase .carousel-showcase-slide-content a:any-link:focus-visible {
+.carousel-showcase.product-showcase .carousel-showcase-slide-content a:any-link:hover,
+.carousel-showcase.product-showcase .carousel-showcase-slide-content a:any-link:focus-visible,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content a:any-link:hover,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content a:any-link:focus-visible {
   background-color: rgb(255 255 255);
   border-color: rgb(255 255 255);
   color: var(--dark-background-color);
   text-decoration: none;
 }
 
-/* Second CTA = outlined "ghost" variant (source: 1px solid rgb(244,240,238)). */
-/* stylelint-disable-next-line no-descending-specificity */
-.carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link {
+/* Second CTA = outlined "ghost" variant. */
+/* stylelint-disable no-descending-specificity */
+.carousel-showcase.product-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link {
   background-color: transparent;
   border: 1px solid rgb(244 240 238);
 }
 
-.carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link:hover,
-.carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link:focus-visible {
+.carousel-showcase.product-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link:hover,
+.carousel-showcase.product-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link:focus-visible,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link:hover,
+.carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content p:has(> a) + p:has(> a) a:any-link:focus-visible {
   background-color: rgb(255 255 255);
   border-color: rgb(255 255 255);
   color: var(--dark-background-color);
 }
+/* stylelint-enable no-descending-specificity */
 
-/* Dealer variant: single linked city name — render as a plain white label,
-   not a filled button, matching the source city-launch slides. */
-.carousel-showcase .carousel-showcase-slide-content:has(> p:only-child > a:only-child) a:any-link {
+/* ---------------------------------------------------------------------------
+   DEALER CAROUSEL — full-bleed portrait city photos + a plain white city link.
+   --------------------------------------------------------------------------- */
+.carousel-showcase.dealer-carousel {
+  --carousel-showcase-height: min(120vw, calc(100dvh - var(--nav-height)));
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 0%) 40%);
+  pointer-events: none;
+}
+
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-content {
+  z-index: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--dark-text-color);
+  margin: 0;
+  padding: 24px 20px 40px;
+  width: 100%;
+}
+
+/* stylelint-disable no-descending-specificity */
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link {
   padding: 0;
   border: 0;
   background: none;
@@ -196,16 +234,102 @@
   font-weight: 700;
   text-transform: none;
   letter-spacing: 0.16px;
+  text-decoration: none;
 }
 
-.carousel-showcase .carousel-showcase-slide-content:has(> p:only-child > a:only-child) a:any-link:hover,
-.carousel-showcase .carousel-showcase-slide-content:has(> p:only-child > a:only-child) a:any-link:focus-visible {
-  background: none;
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link:hover,
+.carousel-showcase.dealer-carousel .carousel-showcase-slide-content a:any-link:focus-visible {
   color: rgb(255 255 255);
   text-decoration: underline;
 }
+/* stylelint-enable no-descending-specificity */
 
-/* Slide indicators (dots) */
+@media (width >= 900px) {
+  .carousel-showcase.dealer-carousel {
+    --carousel-showcase-height: min(56.25vw, calc(100dvh - var(--nav-height)));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   GALLERY MARQUEE — continuously auto-scrolling strip of image-only tiles.
+   No nav arrows, no dots. Track is duplicated in JS for a seamless loop.
+   --------------------------------------------------------------------------- */
+.carousel-showcase.gallery-marquee {
+  --marquee-tile-height: 140px;
+  --marquee-gap: 12px;
+
+  background-color: var(--background-color);
+  padding: 24px 0;
+  overflow: hidden;
+}
+
+.carousel-showcase.gallery-marquee .carousel-showcase-slides-container {
+  overflow: hidden;
+}
+
+.carousel-showcase.gallery-marquee .carousel-showcase-marquee-track {
+  display: flex;
+  gap: var(--marquee-gap);
+  width: max-content;
+  overflow: visible;
+  scroll-snap-type: none;
+  animation: carousel-showcase-marquee 40s linear infinite;
+}
+
+.carousel-showcase.gallery-marquee:hover .carousel-showcase-marquee-track {
+  animation-play-state: paused;
+}
+
+.carousel-showcase.gallery-marquee .carousel-showcase-slide {
+  flex: 0 0 auto;
+  width: auto;
+  height: var(--marquee-tile-height);
+  min-height: 0;
+  display: block;
+}
+
+.carousel-showcase.gallery-marquee .carousel-showcase-slide-image {
+  position: static;
+  height: 100%;
+}
+
+.carousel-showcase.gallery-marquee .carousel-showcase-slide-image picture {
+  position: static;
+  height: 100%;
+}
+
+.carousel-showcase.gallery-marquee .carousel-showcase-slide-image picture > img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Image-only tiles: any empty content cell is hidden. */
+.carousel-showcase.gallery-marquee .carousel-showcase-slide-content {
+  display: none;
+}
+
+@keyframes carousel-showcase-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-showcase.gallery-marquee .carousel-showcase-marquee-track {
+    animation: none;
+  }
+}
+
+@media (width >= 900px) {
+  .carousel-showcase.gallery-marquee {
+    --marquee-tile-height: 183px;
+    --marquee-gap: 16px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Shared controls (dots + arrows) — used by product-showcase & dealer-carousel.
+   --------------------------------------------------------------------------- */
 .carousel-showcase .carousel-showcase-slide-indicators {
   display: flex;
   flex-wrap: wrap;
@@ -293,28 +417,26 @@
 }
 
 @media (width >= 900px) {
-  .carousel-showcase .carousel-showcase-slide .carousel-showcase-slide-content {
+  .carousel-showcase.product-showcase .carousel-showcase-slide-content,
+  .carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content {
     padding: 0 36px 140px;
     max-width: 620px;
   }
 
-  /* Slide heading desktop — source measured 44.7px. */
-  .carousel-showcase .carousel-showcase-slide-content h1,
-  .carousel-showcase .carousel-showcase-slide-content h2,
-  .carousel-showcase .carousel-showcase-slide-content h3,
-  .carousel-showcase .carousel-showcase-slide-content h4,
-  .carousel-showcase .carousel-showcase-slide-content h5,
-  .carousel-showcase .carousel-showcase-slide-content h6 {
+  /* Slide heading desktop — source measured ~45px. */
+  .carousel-showcase.product-showcase .carousel-showcase-slide-content :is(h1, h2, h3, h4, h5, h6),
+  .carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content :is(h1, h2, h3, h4, h5, h6) {
     font-size: 45px;
     line-height: 1.2;
   }
 
-  /* CTAs sit side by side on desktop. */
-  .carousel-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a) {
+  .carousel-showcase.product-showcase .carousel-showcase-slide-content p:has(> a) + p:has(> a),
+  .carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content p:has(> a) + p:has(> a) {
     margin-top: 20px;
   }
 
-  .carousel-showcase .carousel-showcase-slide-content a:any-link {
+  .carousel-showcase.product-showcase .carousel-showcase-slide-content a:any-link,
+  .carousel-showcase:not(.gallery-marquee, .dealer-carousel) .carousel-showcase-slide-content a:any-link {
     padding: 8px 20px;
     font-size: var(--body-font-size-s);
   }
