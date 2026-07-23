@@ -82,14 +82,24 @@ var CustomImportScript = (() => {
   // tools/importer/parsers/carousel-showcase.js
   function parse2(element, { document }) {
     const cells = [];
-    const pushSlide = (image, contentNodes) => {
+    const pushSlide = (image, contentNodes, bgLight, bgDark) => {
       const content = (contentNodes || []).filter(Boolean);
       if (!image && content.length === 0) return;
       let imageCell = "";
-      if (image) {
+      if (image || bgLight || bgDark) {
         const imageFrag = document.createDocumentFragment();
-        imageFrag.appendChild(document.createComment(" field:media_image "));
-        imageFrag.appendChild(image);
+        if (image) {
+          imageFrag.appendChild(document.createComment(" field:media_image "));
+          imageFrag.appendChild(image);
+        }
+        if (bgLight) {
+          imageFrag.appendChild(document.createComment(" field:media_backgroundLight "));
+          imageFrag.appendChild(bgLight);
+        }
+        if (bgDark) {
+          imageFrag.appendChild(document.createComment(" field:media_backgroundDark "));
+          imageFrag.appendChild(bgDark);
+        }
         imageCell = imageFrag;
       }
       let contentCell = "";
@@ -111,12 +121,16 @@ var CustomImportScript = (() => {
       ).map((slide) => slide.querySelector(
         ".product-showcase__swiper--image-light img, .product-showcase__swiper--image img, picture img, img"
       ));
+      const bgLightSrc = element.querySelector(".product-showcase__background--light img");
+      const bgDarkSrc = element.querySelector(".product-showcase__background--dark img");
       const contentBlocks = Array.from(
         element.querySelectorAll(".car-models-carousel__content")
       ).filter((c) => c.querySelector("h1, h2, h3, h4, h5, h6"));
       const count = Math.max(slideImages.length, contentBlocks.length);
       for (let i = 0; i < count; i += 1) {
         const image = slideImages[i] || null;
+        const bgLight = bgLightSrc ? bgLightSrc.cloneNode(true) : null;
+        const bgDark = bgDarkSrc ? bgDarkSrc.cloneNode(true) : null;
         const contentBlock = contentBlocks[i];
         const contentNodes = [];
         if (contentBlock) {
@@ -133,7 +147,7 @@ var CustomImportScript = (() => {
             }
           });
         }
-        pushSlide(image, contentNodes);
+        pushSlide(image, contentNodes, bgLight, bgDark);
       }
       if (cells.length) {
         const block2 = WebImporter.Blocks.createBlock(document, { name: "carousel-showcase", cells });

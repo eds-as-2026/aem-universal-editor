@@ -26,15 +26,27 @@ export default function parse(element, { document }) {
   const cells = [];
 
   // Helper: build a [imageCell, contentCell] slide row with field hints.
-  const pushSlide = (image, contentNodes) => {
+  // Optional bgLight/bgDark are grouped into the media cell so the product
+  // showcase can layer day/night backgrounds behind the product image.
+  const pushSlide = (image, contentNodes, bgLight, bgDark) => {
     const content = (contentNodes || []).filter(Boolean);
     if (!image && content.length === 0) return;
 
     let imageCell = '';
-    if (image) {
+    if (image || bgLight || bgDark) {
       const imageFrag = document.createDocumentFragment();
-      imageFrag.appendChild(document.createComment(' field:media_image '));
-      imageFrag.appendChild(image);
+      if (image) {
+        imageFrag.appendChild(document.createComment(' field:media_image '));
+        imageFrag.appendChild(image);
+      }
+      if (bgLight) {
+        imageFrag.appendChild(document.createComment(' field:media_backgroundLight '));
+        imageFrag.appendChild(bgLight);
+      }
+      if (bgDark) {
+        imageFrag.appendChild(document.createComment(' field:media_backgroundDark '));
+        imageFrag.appendChild(bgDark);
+      }
       imageCell = imageFrag;
     }
 
@@ -64,6 +76,12 @@ export default function parse(element, { document }) {
       '.product-showcase__swiper--image-light img, .product-showcase__swiper--image img, picture img, img',
     ));
 
+    // Day/night backdrops are shared across the showcase (block-level layers).
+    // Grab them once; each slide gets its own clone so per-slide theme layering
+    // works and no single node is moved between multiple cells.
+    const bgLightSrc = element.querySelector('.product-showcase__background--light img');
+    const bgDarkSrc = element.querySelector('.product-showcase__background--dark img');
+
     // Content blocks (one per model). Only keep those with a heading (skip decorative clones).
     const contentBlocks = Array.from(
       element.querySelectorAll('.car-models-carousel__content'),
@@ -72,6 +90,8 @@ export default function parse(element, { document }) {
     const count = Math.max(slideImages.length, contentBlocks.length);
     for (let i = 0; i < count; i += 1) {
       const image = slideImages[i] || null;
+      const bgLight = bgLightSrc ? bgLightSrc.cloneNode(true) : null;
+      const bgDark = bgDarkSrc ? bgDarkSrc.cloneNode(true) : null;
       const contentBlock = contentBlocks[i];
       const contentNodes = [];
       if (contentBlock) {
@@ -91,7 +111,7 @@ export default function parse(element, { document }) {
             }
           });
       }
-      pushSlide(image, contentNodes);
+      pushSlide(image, contentNodes, bgLight, bgDark);
     }
     if (cells.length) {
       const block = WebImporter.Blocks.createBlock(document, { name: 'carousel-showcase', cells });
