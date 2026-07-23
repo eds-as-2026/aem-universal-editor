@@ -205,73 +205,55 @@ var CustomImportScript = (() => {
 
   // tools/importer/parsers/tabs-timeline.js
   function parse3(element, { document }) {
-    const tabs = Array.from(element.querySelectorAll("li.cmp-tabs__tab, .cmp-tabs__tab"));
-    const panels = Array.from(element.querySelectorAll(".cmp-tabs__tabpanel"));
-    if (tabs.length === 0 && panels.length === 0) {
+    const cards = Array.from(element.querySelectorAll(".timeline-card"));
+    if (cards.length === 0) {
       element.replaceWith(...element.childNodes);
       return;
     }
     const cells = [];
-    const count = Math.max(tabs.length, panels.length);
-    for (let i = 0; i < count; i += 1) {
-      const tab = tabs[i];
-      const panel = panels[i];
-      const titleLabel = tab ? tab.textContent.trim() : `Tab ${i + 1}`;
-      const titleCell = document.createElement("p");
-      titleCell.textContent = titleLabel;
-      const contentFrag = document.createDocumentFragment();
-      if (panel) {
-        const heading = panel.querySelector(
-          ".timeline-container__title, h1, h2, h3, h4, h5, h6"
-        );
-        if (heading) {
-          contentFrag.appendChild(document.createComment(" field:content_heading "));
-          const h = document.createElement("h3");
-          h.textContent = heading.textContent.trim();
-          contentFrag.appendChild(h);
-        }
-        const cards = Array.from(panel.querySelectorAll(".timeline-card"));
-        const firstImage = panel.querySelector(".timeline-card__picture img, picture img, img");
-        if (firstImage) {
-          contentFrag.appendChild(document.createComment(" field:content_image "));
-          contentFrag.appendChild(firstImage);
-        }
-        const richParts = [];
-        cards.forEach((card) => {
-          const year = card.querySelector(".model-year");
-          const overlay = card.querySelector(".overlay");
-          const tooltip = card.querySelector(".timeline-card-tooltip");
-          let cardTitle = "";
-          if (overlay) {
-            const clone = overlay.cloneNode(true);
-            clone.querySelectorAll(".timeline-card-tooltip, span").forEach((n) => n.remove());
-            cardTitle = clone.textContent.replace(/\s+/g, " ").trim();
-          }
-          const description = tooltip ? tooltip.textContent.replace(/\s+/g, " ").trim() : "";
-          if (year && year.textContent.trim()) {
-            const h = document.createElement("h4");
-            h.textContent = `${year.textContent.trim()}${cardTitle ? ` \u2014 ${cardTitle}` : ""}`;
-            richParts.push(h);
-          } else if (cardTitle) {
-            const h = document.createElement("h4");
-            h.textContent = cardTitle;
-            richParts.push(h);
-          }
-          if (description) {
-            const p = document.createElement("p");
-            p.textContent = description;
-            richParts.push(p);
-          }
-        });
-        if (richParts.length) {
-          contentFrag.appendChild(document.createComment(" field:content_richtext "));
-          richParts.forEach((node) => contentFrag.appendChild(node));
-        }
+    cards.forEach((card) => {
+      const year = card.querySelector(".model-year");
+      const overlay = card.querySelector(".overlay");
+      const tooltip = card.querySelector(".timeline-card-tooltip");
+      const img = card.querySelector(".timeline-card__picture img, picture img, img");
+      let cardTitle = "";
+      if (overlay) {
+        const clone = overlay.cloneNode(true);
+        clone.querySelectorAll(".timeline-card-tooltip, span").forEach((n) => n.remove());
+        cardTitle = clone.textContent.replace(/\s+/g, " ").trim();
       }
-      cells.push([titleCell, contentFrag]);
-    }
+      const description = tooltip ? tooltip.textContent.replace(/\s+/g, " ").trim() : "";
+      let imageCell = "";
+      if (img) {
+        const imageFrag = document.createDocumentFragment();
+        imageFrag.appendChild(document.createComment(" field:image "));
+        imageFrag.appendChild(img);
+        imageCell = imageFrag;
+      }
+      const textFrag = document.createDocumentFragment();
+      textFrag.appendChild(document.createComment(" field:text "));
+      const yearValue = year ? year.textContent.trim() : "";
+      if (yearValue || cardTitle) {
+        const h = document.createElement("h4");
+        h.textContent = `${yearValue}${yearValue && cardTitle ? " \u2014 " : ""}${cardTitle}`;
+        textFrag.appendChild(h);
+      }
+      if (description) {
+        const p = document.createElement("p");
+        p.textContent = description;
+        textFrag.appendChild(p);
+      }
+      cells.push([imageCell, textFrag]);
+    });
     const block = WebImporter.Blocks.createBlock(document, { name: "tabs-timeline", cells });
-    element.replaceWith(block);
+    const heading = element.querySelector(".timeline-container__title, h1, h2, h3");
+    if (heading && heading.textContent.trim()) {
+      const introHeading = document.createElement("h2");
+      introHeading.textContent = heading.textContent.trim();
+      element.replaceWith(introHeading, block);
+    } else {
+      element.replaceWith(block);
+    }
   }
 
   // tools/importer/transformers/mgselect-cleanup.js

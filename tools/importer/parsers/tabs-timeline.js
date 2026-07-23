@@ -2,124 +2,85 @@
 /* global WebImporter */
 /**
  * Parser for tabs-timeline.
- * Base block: tabs
+ * Base: container block (one item per heritage card).
  * Source URL: https://www.mgselect.co.in/
- * Generated: 2026-07-23
  *
- * Library convention (base: tabs) — container block, 2 columns:
- *   Row 1: block name.
- *   Each tab = one row: [Tab Label (cell 1), Tab Content (cell 2)].
- *   Cell 2 may contain headings, links, images, and richtext.
+ * The source "OUR HERITAGE" section is a horizontal timeline of cards, each
+ * with its own image, year, title and description. The original tab/panel
+ * chrome (tablist, single "OUR HERITAGE" tab) is not reproduced — there is
+ * only one panel, so we render its cards directly.
  *
  * Item model (blocks/tabs-timeline/_tabs-timeline.json, tabs-timeline-item):
- *   - title            (text)      -> column 1 (tab label). Rendered as the tab button.
- *   - content_heading  (text)      -> column 2, field hint: content_heading
- *   - content_headingType (select) -> COLLAPSED (Type suffix), no hint
- *   - content_image    (reference) -> column 2, field hint: content_image
- *   - content_richtext (richtext)  -> column 2, field hint: content_richtext
- *   The content_* fields share the `content` prefix and live in the same (2nd) cell.
+ *   - image     (reference) -> cell 1, field hint: image  (imageAlt collapses to <img alt>)
+ *   - text      (richtext)  -> cell 2, field hint: text   (year+title heading + description)
  *
- * Source: cmp-tabs with a tablist (li.cmp-tabs__tab) and matching panels
- * (div.cmp-tabs__tabpanel). Each panel holds a .timeline section: an h2 title
- * plus N .timeline-card slides (year + overlay title + tooltip description + image).
- *
- * Note: timeline images are Dynamic Media / Scene7 URLs; the parser leaves the
- * <img> in its natural content_image slot and the DM/Scene7 transformer rewrites it.
+ * Each card = one row: [image | text]. The intro heading
+ * ("A heritage written in motion.") is emitted as default content before the
+ * block. Per-card images map cleanly because each lives in its own item's
+ * dedicated image cell (not inline in richtext).
  */
 export default function parse(element, { document }) {
-  const tabs = Array.from(element.querySelectorAll('li.cmp-tabs__tab, .cmp-tabs__tab'));
-  const panels = Array.from(element.querySelectorAll('.cmp-tabs__tabpanel'));
+  const cards = Array.from(element.querySelectorAll('.timeline-card'));
 
   // --- EMPTY-BLOCK GUARD ---
-  if (tabs.length === 0 && panels.length === 0) {
+  if (cards.length === 0) {
     element.replaceWith(...element.childNodes);
     return;
   }
 
   const cells = [];
 
-  const count = Math.max(tabs.length, panels.length);
-  for (let i = 0; i < count; i += 1) {
-    const tab = tabs[i];
-    const panel = panels[i];
+  cards.forEach((card) => {
+    const year = card.querySelector('.model-year');
+    const overlay = card.querySelector('.overlay');
+    const tooltip = card.querySelector('.timeline-card-tooltip');
+    const img = card.querySelector('.timeline-card__picture img, picture img, img');
 
-    // --- COLUMN 1: tab title (tab-label cell; no field hint on the label cell) ---
-    const titleLabel = tab ? tab.textContent.trim() : `Tab ${i + 1}`;
-    const titleCell = document.createElement('p');
-    titleCell.textContent = titleLabel;
+    // Card title = overlay text minus tooltip text and the decorative "+" span.
+    let cardTitle = '';
+    if (overlay) {
+      const clone = overlay.cloneNode(true);
+      clone.querySelectorAll('.timeline-card-tooltip, span').forEach((n) => n.remove());
+      cardTitle = clone.textContent.replace(/\s+/g, ' ').trim();
+    }
+    const description = tooltip ? tooltip.textContent.replace(/\s+/g, ' ').trim() : '';
 
-    // --- COLUMN 2: content (heading + image + richtext) ---
-    const contentFrag = document.createDocumentFragment();
-
-    if (panel) {
-      // content_heading: the panel's timeline title.
-      const heading = panel.querySelector(
-        '.timeline-container__title, h1, h2, h3, h4, h5, h6',
-      );
-      if (heading) {
-        contentFrag.appendChild(document.createComment(' field:content_heading '));
-        // Normalize to a heading element so md renders it as a heading.
-        const h = document.createElement('h3');
-        h.textContent = heading.textContent.trim();
-        contentFrag.appendChild(h);
-      }
-
-      // Timeline cards: year, title, description, image.
-      const cards = Array.from(panel.querySelectorAll('.timeline-card'));
-
-      // content_image: first available card image as the representative image.
-      const firstImage = panel.querySelector('.timeline-card__picture img, picture img, img');
-      if (firstImage) {
-        contentFrag.appendChild(document.createComment(' field:content_image '));
-        contentFrag.appendChild(firstImage);
-      }
-
-      // content_richtext: the full timeline narrative (each card = year heading
-      // + description). NOTE: the tabs-item model has a single content_image
-      // field and a richtext field; md2jcr's richtext stops consuming at the
-      // first inline image, so per-card images CANNOT live inside richtext
-      // without breaking the model mapping. Images stay out of richtext; the
-      // one representative image goes in content_image above.
-      const richParts = [];
-      cards.forEach((card) => {
-        const year = card.querySelector('.model-year');
-        const overlay = card.querySelector('.overlay');
-        const tooltip = card.querySelector('.timeline-card-tooltip');
-
-        // Card title = overlay text minus tooltip text and the decorative "+" span.
-        let cardTitle = '';
-        if (overlay) {
-          const clone = overlay.cloneNode(true);
-          clone.querySelectorAll('.timeline-card-tooltip, span').forEach((n) => n.remove());
-          cardTitle = clone.textContent.replace(/\s+/g, ' ').trim();
-        }
-        const description = tooltip ? tooltip.textContent.replace(/\s+/g, ' ').trim() : '';
-
-        if (year && year.textContent.trim()) {
-          const h = document.createElement('h4');
-          h.textContent = `${year.textContent.trim()}${cardTitle ? ` — ${cardTitle}` : ''}`;
-          richParts.push(h);
-        } else if (cardTitle) {
-          const h = document.createElement('h4');
-          h.textContent = cardTitle;
-          richParts.push(h);
-        }
-        if (description) {
-          const p = document.createElement('p');
-          p.textContent = description;
-          richParts.push(p);
-        }
-      });
-
-      if (richParts.length) {
-        contentFrag.appendChild(document.createComment(' field:content_richtext '));
-        richParts.forEach((node) => contentFrag.appendChild(node));
-      }
+    // --- CELL 1: image ---
+    let imageCell = '';
+    if (img) {
+      const imageFrag = document.createDocumentFragment();
+      imageFrag.appendChild(document.createComment(' field:image '));
+      imageFrag.appendChild(img);
+      imageCell = imageFrag;
     }
 
-    cells.push([titleCell, contentFrag]);
-  }
+    // --- CELL 2: text (year+title heading + description) ---
+    const textFrag = document.createDocumentFragment();
+    textFrag.appendChild(document.createComment(' field:text '));
+    const yearValue = year ? year.textContent.trim() : '';
+    if (yearValue || cardTitle) {
+      const h = document.createElement('h4');
+      h.textContent = `${yearValue}${yearValue && cardTitle ? ' — ' : ''}${cardTitle}`;
+      textFrag.appendChild(h);
+    }
+    if (description) {
+      const p = document.createElement('p');
+      p.textContent = description;
+      textFrag.appendChild(p);
+    }
+
+    cells.push([imageCell, textFrag]);
+  });
 
   const block = WebImporter.Blocks.createBlock(document, { name: 'tabs-timeline', cells });
-  element.replaceWith(block);
+
+  // Intro heading as default content before the block.
+  const heading = element.querySelector('.timeline-container__title, h1, h2, h3');
+  if (heading && heading.textContent.trim()) {
+    const introHeading = document.createElement('h2');
+    introHeading.textContent = heading.textContent.trim();
+    element.replaceWith(introHeading, block);
+  } else {
+    element.replaceWith(block);
+  }
 }
