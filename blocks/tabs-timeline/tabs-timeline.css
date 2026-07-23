@@ -106,23 +106,6 @@
   border-top: 1px solid var(--text-color);
 }
 
-/* Per-card heritage image: fixed 4:3 frame under the year/title. */
-.tabs-timeline .tabs-timeline-card-body picture,
-.tabs-timeline .tabs-timeline-card-body p:has(> picture),
-.tabs-timeline .tabs-timeline-card-body p:has(> img) {
-  display: block;
-  width: 100%;
-  margin: 4px 0 0;
-}
-
-.tabs-timeline .tabs-timeline-card-body picture img,
-.tabs-timeline .tabs-timeline-card-body p > img {
-  display: block;
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
 .tabs-timeline .tabs-timeline-year {
   font-family: var(--body-font-family);
   font-size: 16px;
@@ -139,7 +122,6 @@
   color: var(--text-color);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .tabs-timeline .tabs-timeline-card p {
   margin: 0;
   font-size: var(--body-font-size-s);

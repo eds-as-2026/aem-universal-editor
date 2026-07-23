@@ -74,16 +74,17 @@ export default function parse(element, { document }) {
         contentFrag.appendChild(firstImage);
       }
 
-      // content_richtext: the full timeline narrative. Each card = a year
-      // heading, its own image, then the description. Keeping the per-card
-      // image inline (right after its year heading) lets the block JS split
-      // the flat richtext into cards and show the correct image on each.
+      // content_richtext: the full timeline narrative (each card = year heading
+      // + description). NOTE: the tabs-item model has a single content_image
+      // field and a richtext field; md2jcr's richtext stops consuming at the
+      // first inline image, so per-card images CANNOT live inside richtext
+      // without breaking the model mapping. Images stay out of richtext; the
+      // one representative image goes in content_image above.
       const richParts = [];
       cards.forEach((card) => {
         const year = card.querySelector('.model-year');
         const overlay = card.querySelector('.overlay');
         const tooltip = card.querySelector('.timeline-card-tooltip');
-        const cardImg = card.querySelector('.timeline-card__picture img, picture img, img');
 
         // Card title = overlay text minus tooltip text and the decorative "+" span.
         let cardTitle = '';
@@ -102,12 +103,6 @@ export default function parse(element, { document }) {
           const h = document.createElement('h4');
           h.textContent = cardTitle;
           richParts.push(h);
-        }
-        // Per-card image directly under its heading.
-        if (cardImg) {
-          const p = document.createElement('p');
-          p.appendChild(cardImg);
-          richParts.push(p);
         }
         if (description) {
           const p = document.createElement('p');
