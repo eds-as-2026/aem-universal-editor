@@ -15,7 +15,10 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "hero-luxury",
+      "carousel-showcase",
+      "tabs-timeline"
     ]
   },
   {
