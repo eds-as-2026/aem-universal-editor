@@ -36,7 +36,7 @@
       "id": "carousel-showcase-item",
       "fields": [
         {
-          "component": "richtext",
+          "component": "reference",
           "valueType": "string",
           "name": "media_image",
           "label": "Background Image",

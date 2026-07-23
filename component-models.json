@@ -164,7 +164,7 @@
     "id": "carousel-showcase-item",
     "fields": [
       {
-        "component": "richtext",
+        "component": "reference",
         "valueType": "string",
         "name": "media_image",
         "label": "Background Image",
@@ -219,7 +219,7 @@
     "id": "hero-luxury",
     "fields": [
       {
-        "component": "richtext",
+        "component": "reference",
         "valueType": "string",
         "name": "image",
         "label": "Image",
@@ -310,7 +310,7 @@
         ]
       },
       {
-        "component": "richtext",
+        "component": "reference",
         "valueType": "string",
         "name": "content_image",
         "label": "Image",

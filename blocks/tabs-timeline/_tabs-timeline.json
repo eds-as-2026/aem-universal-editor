@@ -77,7 +77,7 @@
           ]
         },
         {
-          "component": "richtext",
+          "component": "reference",
           "valueType": "string",
           "name": "content_image",
           "label": "Image",
