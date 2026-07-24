@@ -320,3 +320,182 @@ main .section.dark h6,
 main .section.dark a:any-link {
   color: var(--dark-text-color);
 }
+
+/* Brand manifesto: the default content (eyebrow, logo, heading, paragraphs)
+   is centered in the source. Scope centering to the section that holds the
+   scrolling gallery so other light sections (e.g. heritage) stay left-aligned. */
+main .section.light:has(.carousel-gallery) .default-content-wrapper,
+main .section.light:has(.gallery-marquee) .default-content-wrapper {
+  text-align: center;
+}
+
+main .section.light:has(.carousel-gallery) .default-content-wrapper p:has(> a[href*="/is/image/"]),
+main .section.light:has(.gallery-marquee) .default-content-wrapper p:has(> a[href*="/is/image/"]) {
+  display: flex;
+  justify-content: center;
+}
+
+main .section.light:has(.carousel-gallery) .default-content-wrapper picture img,
+main .section.light:has(.gallery-marquee) .default-content-wrapper picture img {
+  max-width: 220px;
+  height: auto;
+}
+
+/* Manifesto scroll-pinned crossfade: a tall stage that pins a viewport-high
+   panel and crossfades the heading state into the paragraph state as the user
+   scrolls through it (mirrors the source's scroll-hijack). */
+/* stylelint-disable no-descending-specificity */
+main .section .manifesto-scroller {
+  position: relative;
+  height: 250vh;
+}
+
+main .section .manifesto-scroller-pin {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* The eyebrow + logo stay static and always visible. */
+main .section .manifesto-scroller-static {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto 8px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+main .section .manifesto-scroller-static > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* "WELCOME TO" eyebrow. */
+main .section .manifesto-scroller-static p {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: 0.16px;
+  text-align: center;
+  color: #000;
+}
+
+/* MG Select wordmark — small, matching the source. */
+main .section .manifesto-scroller-static img {
+  display: block;
+  width: auto;
+  height: 22px;
+  max-width: 140px;
+  margin: 6px auto 0;
+}
+
+/* The crossfade stack overlaps the heading and paragraph panels. */
+main .section .manifesto-scroller-stack {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+main .section .manifesto-scroller-panel {
+  grid-area: 1 / 1;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+  transition: opacity 0.2s linear, transform 0.2s linear;
+  will-change: opacity, transform;
+}
+
+main .section .manifesto-scroller-paragraphs {
+  opacity: 0;
+}
+
+main .section .manifesto-scroller-panel > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* "A New-Era of Luxury" heading. */
+main .section .manifesto-scroller-heading h2 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: 0.16px;
+  text-align: center;
+  color: #000;
+}
+
+/* Manifesto paragraphs. */
+main .section .manifesto-scroller-paragraphs p {
+  margin: 0 auto;
+  max-width: 620px;
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.35;
+  letter-spacing: -0.32px;
+  text-align: center;
+  color: #1e1e1e;
+}
+
+main .section .manifesto-scroller-paragraphs p + p {
+  margin-top: 8px;
+}
+
+/* First manifesto line is the pure-black lead-in. */
+main .section .manifesto-scroller-paragraphs p:first-child {
+  color: #000;
+  letter-spacing: 0.16px;
+}
+
+@media (width >= 900px) {
+  main .section .manifesto-scroller-static p {
+    font-size: 24px;
+  }
+
+  main .section .manifesto-scroller-static img {
+    height: 26px;
+    max-width: 170px;
+  }
+
+  main .section .manifesto-scroller-heading h2 {
+    font-size: 44px;
+    line-height: 1.15;
+  }
+
+  main .section .manifesto-scroller-paragraphs p {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .section .manifesto-scroller {
+    height: auto;
+  }
+
+  main .section .manifesto-scroller-pin {
+    position: static;
+    display: block;
+    height: auto;
+  }
+
+  main .section .manifesto-scroller-stack {
+    display: block;
+  }
+
+  main .section .manifesto-scroller-panel {
+    grid-area: auto;
+    opacity: 1 !important;
+  }
+}
+/* stylelint-enable no-descending-specificity */

@@ -278,6 +278,111 @@ window.__dmRender__ = (src, alt) => {
 // --- END DM/Scene7 auto-block ---
 
 /**
+ * Brand manifesto scroll-pinned crossfade.
+ * The manifesto default content (eyebrow "WELCOME TO", MG Select logo, the
+ * "A New-Era of Luxury" heading, then the paragraphs) sits in the same light
+ * section as the gallery marquee. The source pins a viewport-high panel and
+ * crossfades the heading into the paragraphs as the visitor scrolls. We rebuild
+ * the default content into the scroller structure the CSS expects and drive the
+ * crossfade with the scroll position over the tall stage.
+ * @param {Element} main The container element
+ */
+function buildManifestoScroller(main) {
+  // The manifesto is a default-content wrapper whose first heading is preceded
+  // by an eyebrow paragraph and a logo image (the "WELCOME TO" + MG Select
+  // wordmark intro). Detect it by that signature rather than the gallery
+  // variant class, which is only set by the author's Style selection.
+  const wrapper = [...main.querySelectorAll('.default-content-wrapper')].find((w) => {
+    if (w.dataset.manifesto === 'done') return false;
+    const heading = w.querySelector('h1, h2, h3');
+    if (!heading) return false;
+    // Something (eyebrow/logo) must precede the heading, and it must contain an image.
+    let node = w.firstElementChild;
+    let sawImage = false;
+    while (node && node !== heading) {
+      if (node.querySelector && node.querySelector('img')) sawImage = true;
+      node = node.nextElementSibling;
+    }
+    return sawImage && node === heading && w.firstElementChild !== heading;
+  });
+  if (!wrapper) return;
+
+  const heading = wrapper.querySelector('h1, h2, h3');
+  if (!heading) return;
+
+  // Static part = everything before the heading (eyebrow + logo).
+  // Paragraphs = the heading's following siblings.
+  const staticNodes = [];
+  let node = wrapper.firstElementChild;
+  while (node && node !== heading) {
+    const next = node.nextElementSibling;
+    staticNodes.push(node);
+    node = next;
+  }
+  const paragraphNodes = [];
+  node = heading.nextElementSibling;
+  while (node) {
+    const next = node.nextElementSibling;
+    paragraphNodes.push(node);
+    node = next;
+  }
+
+  const scroller = document.createElement('div');
+  scroller.className = 'manifesto-scroller';
+  const pin = document.createElement('div');
+  pin.className = 'manifesto-scroller-pin';
+
+  const staticEl = document.createElement('div');
+  staticEl.className = 'manifesto-scroller-static';
+  staticNodes.forEach((n) => staticEl.append(n));
+
+  const stack = document.createElement('div');
+  stack.className = 'manifesto-scroller-stack';
+  const headingPanel = document.createElement('div');
+  headingPanel.className = 'manifesto-scroller-panel manifesto-scroller-heading';
+  headingPanel.append(heading);
+  const paragraphPanel = document.createElement('div');
+  paragraphPanel.className = 'manifesto-scroller-panel manifesto-scroller-paragraphs';
+  paragraphNodes.forEach((n) => paragraphPanel.append(n));
+  stack.append(headingPanel, paragraphPanel);
+
+  pin.append(staticEl, stack);
+  scroller.append(pin);
+  wrapper.replaceChildren(scroller);
+  wrapper.dataset.manifesto = 'done';
+
+  // Drive the crossfade from scroll progress through the tall stage. As the
+  // stage scrolls past, fade the heading out / paragraphs in around the middle.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (reduce.matches) return;
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const rect = scroller.getBoundingClientRect();
+    const total = rect.height - window.innerHeight;
+    if (total <= 0) return;
+    // progress 0 at stage top pinned, 1 when the stage has fully scrolled.
+    const progress = Math.min(1, Math.max(0, -rect.top / total));
+    // Crossfade over the middle third of the scroll.
+    const t = Math.min(1, Math.max(0, (progress - 0.33) / 0.34));
+    headingPanel.style.opacity = String(1 - t);
+    headingPanel.style.transform = `translateY(${-20 * t}px)`;
+    paragraphPanel.style.opacity = String(t);
+    paragraphPanel.style.transform = `translateY(${20 * (1 - t)}px)`;
+  };
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -375,6 +480,15 @@ async function loadLazy(doc) {
 
   const main = doc.querySelector('main');
   await loadSections(main);
+
+  // Build the manifesto scroll-crossfade now that sections (and their
+  // .default-content-wrapper) are decorated.
+  try {
+    buildManifestoScroller(main);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Manifesto scroller failed', error);
+  }
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
