@@ -1,0 +1,38 @@
+{
+  "variantName": "cards-safety",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-24T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/cyberster",
+    "originPage": "MG Cyberster product page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "feature-cards",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "grid of image + title + description feature cards",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "product/safety feature card grids (image + title + description)",
+      "benefit or capability highlight grids",
+      "light-theme uniform card layouts"
+    ],
+    "notSuitableFor": [
+      "no-image spec/stat rows",
+      "interactive video hotspot cards"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cyberster"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-24T00:00:00.000Z"
+  }
+}

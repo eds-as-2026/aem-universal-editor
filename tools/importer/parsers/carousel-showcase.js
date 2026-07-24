@@ -155,6 +155,27 @@ export default function parse(element, { document }) {
     }
   }
 
+  // --- STRUCTURE D: Art gallery (absolute-positioned image items) ---
+  // Cyberster art gallery lays images out in .art-gallery__left / __right columns
+  // (desktop) plus a duplicate .art-gallery__mob set (mobile). Collect the
+  // desktop left+right items and dedupe by src to get one image-only slide each.
+  if (element.querySelector('.art-gallery__left--item, .art-gallery__right--item')) {
+    const seen = new Set();
+    element
+      .querySelectorAll('.art-gallery__left--item img, .art-gallery__right--item img')
+      .forEach((image) => {
+        const src = image.getAttribute('src');
+        if (src && seen.has(src)) return;
+        if (src) seen.add(src);
+        pushSlide(image, []);
+      });
+    if (cells.length) {
+      const block = WebImporter.Blocks.createBlock(document, { name: 'carousel-showcase', cells });
+      element.replaceWith(block);
+      return;
+    }
+  }
+
   // --- STRUCTURE B: Brand manifesto gallery (image-only slides) ---
   {
     const seen = new Set();

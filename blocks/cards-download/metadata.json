@@ -1,0 +1,38 @@
+{
+  "variantName": "cards-download",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-24T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/cyberster",
+    "originPage": "MG Cyberster product page",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "document-download-list",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "repeating icon + linked document label",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "document / manual download link lists (icon + label)",
+      "compact resource link grids",
+      "brochure / warranty / manual link strips"
+    ],
+    "notSuitableFor": [
+      "large image feature cards",
+      "spec/stat number rows"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cyberster"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-24T00:00:00.000Z"
+  }
+}

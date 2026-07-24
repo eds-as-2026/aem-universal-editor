@@ -1,0 +1,38 @@
+{
+  "variantName": "columns-reveal",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-07-24T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/cyberster",
+    "originPage": "MG Cyberster product page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "image-reveal",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "base image + overlay reveal image (drag/touch wipe between them)",
+    "buttonCount": 0,
+    "imageCount": 2
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "before/after image reveal comparisons",
+      "drag-to-reveal interactive image pairs",
+      "side-by-side image reveal sequences"
+    ],
+    "notSuitableFor": [
+      "text-heavy multi-column content",
+      "static single-image displays"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cyberster"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-24T00:00:00.000Z"
+  }
+}

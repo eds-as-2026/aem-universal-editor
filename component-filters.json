@@ -18,7 +18,44 @@
       "fragment",
       "hero-luxury",
       "carousel-showcase",
-      "tabs-timeline"
+      "tabs-timeline",
+      "cards-spec",
+      "cards-hotspot",
+      "columns-reveal",
+      "tabs-drivemode",
+      "cards-safety",
+      "cards-color",
+      "cards-download"
+    ]
+  },
+  {
+    "id": "cards-color",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "cards-download",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "cards-hotspot",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "cards-safety",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "cards-spec",
+    "components": [
+      "card"
     ]
   },
   {
@@ -34,6 +71,21 @@
     ]
   },
   {
+    "id": "columns-reveal",
+    "components": [
+      "column"
+    ]
+  },
+  {
+    "id": "column",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -46,6 +98,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "tabs-drivemode",
+    "components": [
+      "tabs-drivemode-item"
     ]
   },
   {

@@ -53,7 +53,14 @@
         "fragment",
         "hero-luxury",
         "carousel-showcase",
-        "tabs-timeline"
+        "tabs-timeline",
+        "cards-spec",
+        "cards-hotspot",
+        "columns-reveal",
+        "tabs-drivemode",
+        "cards-safety",
+        "cards-color",
+        "cards-download"
       ]
     }
   ]

@@ -1,0 +1,39 @@
+{
+  "variantName": "cards-hotspot",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-24T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/cyberster",
+    "originPage": "MG Cyberster product page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "interactive-video-hotspots",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "intro title + background video + repeating hotspot cards (media + title + description)",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "interactive video-hotspot feature callouts",
+      "exterior/interior feature discovery sections",
+      "media-driven feature highlight cards over a background video"
+    ],
+    "notSuitableFor": [
+      "static text-only card grids",
+      "spec/stat number rows"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cyberster"],
+    "reuseCount": 2,
+    "lastUsed": "2026-07-24T00:00:00.000Z",
+    "notes": "Reused across two sections on the cyberster page: exterior-hotspots (Thrill, Distilled.) and interior-hotspots (The Future's Inside)."
+  }
+}

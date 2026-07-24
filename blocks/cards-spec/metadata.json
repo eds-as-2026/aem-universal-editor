@@ -1,0 +1,38 @@
+{
+  "variantName": "cards-spec",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-24T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/cyberster",
+    "originPage": "MG Cyberster product page",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "spec-stats",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "row of value + label spec items over an intro heading/paragraph",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "product specification / stat rows (value + label)",
+      "key-figure highlight strips",
+      "performance metrics displays"
+    ],
+    "notSuitableFor": [
+      "image-led card grids",
+      "long-form content cards"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cyberster"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-24T00:00:00.000Z"
+  }
+}

@@ -31,8 +31,9 @@
     ]
   },
   "usage": {
-    "pagesUsing": ["/index"],
-    "reuseCount": 1,
-    "lastUsed": "2026-07-23T00:00:00.000Z"
+    "pagesUsing": ["/index", "/cyberster"],
+    "reuseCount": 5,
+    "lastUsed": "2026-07-24T00:00:00.000Z",
+    "notes": "Reused on the cyberster page for four banner sections: product-banner, couture-banner, battery-banner, and the m9-crosssell promo banner."
   }
 }

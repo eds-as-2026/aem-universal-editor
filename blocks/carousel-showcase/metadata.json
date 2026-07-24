@@ -32,9 +32,9 @@
     ]
   },
   "usage": {
-    "pagesUsing": ["/index"],
-    "reuseCount": 3,
-    "lastUsed": "2026-07-23T00:00:00.000Z",
-    "notes": "Reused across three sequences on the homepage: productShowcase, brandManifesto image marquee, and dealerCarousel."
+    "pagesUsing": ["/index", "/cyberster"],
+    "reuseCount": 4,
+    "lastUsed": "2026-07-24T00:00:00.000Z",
+    "notes": "Reused across three sequences on the homepage (productShowcase, brandManifesto image marquee, dealerCarousel) and the cyberster art-gallery 'Art in Motion' dark image gallery."
   }
 }

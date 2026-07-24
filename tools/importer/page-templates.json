@@ -89,6 +89,97 @@
           ]
         }
       ]
+    },
+    {
+      "name": "product-cyberster",
+      "urls": [
+        "https://www.mgselect.co.in/cyberster"
+      ],
+      "representativeUrl": "https://www.mgselect.co.in/cyberster",
+      "coverageGaps": [],
+      "description": "MG Cyberster product detail page: product banner, couture edition, performance specs, exterior/interior video hotspots, image reveal, driving modes, feature cards, color variant picker, art gallery, and M9 cross-sell",
+      "blocks": [
+        {
+          "name": "hero-luxury",
+          "instances": [
+            "div.product-banner.light-header.mg-select-scroller",
+            "div.banner.mg-select-scroller.light-header:nth-of-type(2)",
+            "div.banner.mg-select-scroller.light-header:nth-of-type(8)",
+            "div.mg-container.responsivegrid.mg-select-scroller.hide-header div.textImage"
+          ]
+        },
+        {
+          "name": "cards-spec",
+          "instances": [
+            "div.topFeatures.mg-select-scroller.light-header"
+          ]
+        },
+        {
+          "name": "cards-hotspot",
+          "instances": [
+            "div.interactiveVideoHotspots.mg-select-scroller.light-header:nth-of-type(4)",
+            "div.interactiveVideoHotspots.mg-select-scroller.light-header:nth-of-type(7)"
+          ]
+        },
+        {
+          "name": "columns-reveal",
+          "instances": [
+            "div.imageReveal.light-header.mg-select-scroller"
+          ]
+        },
+        {
+          "name": "tabs-drivemode",
+          "instances": [
+            "div.drivingMode.light-header.mg-select-scroller"
+          ]
+        },
+        {
+          "name": "cards-safety",
+          "instances": [
+            "div.featureCards.mg-header-white.mg-select-scroller"
+          ]
+        },
+        {
+          "name": "cards-color",
+          "instances": [
+            "div.colorVariant.mg-select-scroller.light-header"
+          ]
+        },
+        {
+          "name": "carousel-showcase",
+          "instances": [
+            "div.artGallery.mg-select-scroller.dark-header"
+          ]
+        },
+        {
+          "name": "cards-download",
+          "instances": [
+            "div.mg-container.responsivegrid.mg-select-scroller.hide-header div.genericContainer"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "driving-mode",
+          "name": "Driving Mode",
+          "selector": "div.drivingMode.light-header.mg-select-scroller",
+          "style": "dark",
+          "blocks": [
+            "tabs-drivemode"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "art-gallery",
+          "name": "Art Gallery",
+          "selector": "div.artGallery.mg-select-scroller.dark-header",
+          "style": "dark",
+          "blocks": [
+            "carousel-showcase"
+          ],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }

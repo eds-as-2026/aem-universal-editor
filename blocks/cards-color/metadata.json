@@ -1,0 +1,38 @@
+{
+  "variantName": "cards-color",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-24T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/cyberster",
+    "originPage": "MG Cyberster product page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "color-variant-picker",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "repeating swatch (color name) + associated full car image; JS toggles the displayed image",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "product color/variant pickers",
+      "swatch-to-image selectors",
+      "configurator-style option selectors with a large preview image"
+    ],
+    "notSuitableFor": [
+      "static multi-card grids",
+      "text-only content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cyberster"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-24T00:00:00.000Z"
+  }
+}

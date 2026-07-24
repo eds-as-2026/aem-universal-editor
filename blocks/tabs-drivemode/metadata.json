@@ -1,0 +1,38 @@
+{
+  "variantName": "tabs-drivemode",
+  "baseBlock": "tabs",
+  "version": "1.0.0",
+  "created": "2026-07-24T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.mgselect.co.in/cyberster",
+    "originPage": "MG Cyberster product page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "spacious",
+    "purpose": "driving-mode-selector",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "per-mode: mode label + heading + associated video/description; plus a LAUNCH MODE CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "dark-theme mode/option switchers that swap associated media",
+      "tabbed feature switchers with video panels",
+      "configurator-style selectors on dark backgrounds"
+    ],
+    "notSuitableFor": [
+      "light heritage/year timelines (use tabs-timeline)",
+      "content that should be visible all at once"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/cyberster"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-24T00:00:00.000Z"
+  }
+}
