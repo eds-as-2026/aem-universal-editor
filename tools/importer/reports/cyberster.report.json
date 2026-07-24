@@ -1,0 +1,23 @@
+{
+  "status": "success",
+  "url": "https://www.mgselect.co.in/cyberster",
+  "path": "cyberster",
+  "timestamp": "2026-07-24T06:32:42.687Z",
+  "title": "MG Cyberster Price in India – Fastest Convertible Luxury Electric Sports Car | MG Select",
+  "template": "product-cyberster",
+  "blocks": [
+    "hero-luxury",
+    "hero-luxury",
+    "hero-luxury",
+    "hero-luxury",
+    "cards-spec",
+    "cards-hotspot",
+    "cards-hotspot",
+    "columns-reveal",
+    "tabs-drivemode",
+    "cards-safety",
+    "cards-color",
+    "carousel-showcase",
+    "cards-download"
+  ]
+}
